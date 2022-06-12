@@ -27,4 +27,19 @@ Notable technologies used in this project to ease development:
 1. [Laravel](https://laravel.com/)
 2. [MariaDB](https://mariadb.org/)
 3. [Scribe](https://scribe.knuckles.wtf/)
-4. [Vitesse-Lite Vue](https://github.com/antfu/vitesse-lite) _(Still under consideration)_
+4. [Vitesse-Lite Vue](https://github.com/antfu/vitesse-lite)
+
+# System Requirements
+
+1. PHP 8.0.19
+2. Composer
+3. MySQL 8 / MaraDB 10.3
+
+# Installation
+
+1. Clone this repository.
+2. run ```composer install```
+3. run ```php artisan generate:key```
+4. run ```php artisan jwt:secret```
+5. Copy .env.example and rename to .env
+6. Configure the .env file. Main area of interest is database configuration.
