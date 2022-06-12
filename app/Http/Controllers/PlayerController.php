@@ -22,6 +22,8 @@ class PlayerController extends Controller
     /**
      * Get a player
      * 
+     * @urlParam player int required Player ID
+     * 
      * @responseField id integer Tournament ID.
      * @responseField name string Tournament name.
      * @responseField _url string URL to player resource.
@@ -45,6 +47,8 @@ class PlayerController extends Controller
     /**
      * Update a player
      * 
+     * @urlParam player int required Player ID
+     * 
      * @authenticated
      * @responseFile 200 scenario="Success" responses/players/get_player.json
      * @responseFile 404 scenario="Not Found" responses/errors/model.not_found.json
@@ -65,6 +69,8 @@ class PlayerController extends Controller
     
     /**
      * Delete a player
+     * 
+     * @urlParam player int required Player ID
      * 
      * @authenticated
      * @response 200 scenario="Success" {"status": "Success"}

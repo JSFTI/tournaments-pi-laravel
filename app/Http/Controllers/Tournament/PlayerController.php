@@ -22,6 +22,8 @@ class PlayerController extends Controller
      * 
      * Players list is ordered in descending order by creation time.
      * 
+     * @urlParam tournament int required Tournament ID
+     * 
      * @queryParam page int  Defaults to ```1```. Values less than 1 will default to 1. Example: 1
      * @queryParam name string Search for player that contains ```name``` keyword. No-example
      * @queryParam limit int Defaults to ```10```. Values less than 1 will default to 1. Example: 10
@@ -81,6 +83,8 @@ class PlayerController extends Controller
      * Create a player in a tournament
      * 
      * Only tournament owner can create a player in a tournament.
+     * 
+     * @urlParam tournament int required Tournament ID
      * 
      * @authenticated
      * @responseFile 201 scenario="Created" responses/players/get_player.json

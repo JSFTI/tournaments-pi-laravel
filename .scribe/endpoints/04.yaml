@@ -18,9 +18,9 @@ endpoints:
     urlParameters:
       tournament:
         name: tournament
-        description: ''
+        description: 'Tournament ID'
         required: true
-        example: 20
+        example: 12
         type: integer
         custom: []
     queryParameters:
@@ -130,9 +130,9 @@ endpoints:
     urlParameters:
       tournament:
         name: tournament
-        description: ''
+        description: 'Tournament ID'
         required: true
-        example: 13
+        example: 2
         type: integer
         custom: []
     queryParameters: []
@@ -203,7 +203,7 @@ endpoints:
     urlParameters:
       player:
         name: player
-        description: ''
+        description: 'Player ID'
         required: true
         example: 2
         type: integer
@@ -273,9 +273,9 @@ endpoints:
     urlParameters:
       player:
         name: player
-        description: ''
+        description: 'Player ID'
         required: true
-        example: 9
+        example: 14
         type: integer
         custom: []
     queryParameters: []
@@ -342,9 +342,9 @@ endpoints:
     urlParameters:
       player:
         name: player
-        description: ''
+        description: 'Player ID'
         required: true
-        example: 13
+        example: 5
         type: integer
         custom: []
     queryParameters: []

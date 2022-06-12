@@ -84,6 +84,8 @@ class TournamentController extends Controller
     /**
      * Get a tournament
      * 
+     * @urlParam tournament int required Tournament ID
+     * 
      * @responseField id integer Tournament ID.
      * @responseField name string Tournament name.
      * @responseField description string Tournament description.
@@ -130,6 +132,8 @@ class TournamentController extends Controller
      * 
      * Tournament can only be replaces/edited by tournament owner.
      * 
+     * @urlParam tournament int required Tournament ID
+     * 
      * @authenticated
      * @responseFile 200 scenario="Success" responses/tournaments/get_tournament.json
      * @responseFile 404 scenario="Not Found" responses/errors/model.not_found.json
@@ -159,6 +163,8 @@ class TournamentController extends Controller
      * 
      * Tournament can only be deleted by tournament owner.
      * 
+     * @urlParam tournament int required Tournament ID
+     * 
      * @authenticated
      * @response 200 scenario="Success" {"message": "Tournament deleted"}
      * @responseFile 404 scenario="Not Found" responses/errors/model.not_found.json
@@ -183,6 +189,8 @@ class TournamentController extends Controller
      * Start Tournament
      * 
      * Start a tournament. Tournament can only be started if all initial brackets are filled and can only be started by tournamnet owner.
+     * 
+     * @urlParam tournament int required Tournament ID
      * 
      * @authenticated
      * @response 200 scenario="Success" {"message": "Tournament started"}

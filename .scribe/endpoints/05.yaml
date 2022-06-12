@@ -42,7 +42,7 @@ endpoints:
         name: user
         description: 'Get tournaments owned by specified user with id.'
         required: false
-        example: 10
+        example: 20
         type: integer
         custom: []
     bodyParameters: []
@@ -142,9 +142,9 @@ endpoints:
     urlParameters:
       tournament:
         name: tournament
-        description: ''
+        description: 'Tournament ID'
         required: true
-        example: 13
+        example: 16
         type: integer
         custom: []
     queryParameters: []
@@ -284,9 +284,9 @@ endpoints:
     urlParameters:
       tournament:
         name: tournament
-        description: ''
+        description: 'Tournament ID'
         required: true
-        example: 18
+        example: 17
         type: integer
         custom: []
     queryParameters: []
@@ -361,9 +361,9 @@ endpoints:
     urlParameters:
       tournament:
         name: tournament
-        description: ''
+        description: 'Tournament ID'
         required: true
-        example: 18
+        example: 10
         type: integer
         custom: []
     queryParameters: []
@@ -404,9 +404,9 @@ endpoints:
     urlParameters:
       tournament:
         name: tournament
-        description: ''
+        description: 'Tournament ID'
         required: true
-        example: 3
+        example: 6
         type: integer
         custom: []
     queryParameters: []
