@@ -39,7 +39,7 @@ Notable technologies used in this project to ease development:
 
 1. Clone this repository.
 2. run ```composer install```
-3. run ```php artisan generate:key```
-4. run ```php artisan jwt:secret```
-5. Copy .env.example and rename to .env
-6. Configure the .env file. Main area of interest is database configuration.
+3. Copy .env.example and rename to .env
+4. Configure the .env file. Main area of interest is database configuration.
+5. run ```php artisan generate:key```
+6. run ```php artisan jwt:secret```
