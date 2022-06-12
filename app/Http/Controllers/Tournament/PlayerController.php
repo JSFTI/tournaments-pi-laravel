@@ -9,7 +9,7 @@ use App\Models\Tournament;
 use Illuminate\Http\Request;
 
 /**
- * @group Tournament Management
+ * @group Player Management
  */
 class PlayerController extends Controller
 {

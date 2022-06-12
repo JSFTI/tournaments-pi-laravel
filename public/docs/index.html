@@ -74,12 +74,15 @@
                                                 </ul>
                     
                     <ul id="tocify-header-2" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="endpoints">
-                    <a href="#endpoints">Endpoints</a>
+                <li class="tocify-item level-1" data-unique="authentication-endpoints">
+                    <a href="#authentication-endpoints">Authentication Endpoints</a>
                 </li>
-                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="endpoints-GETme">
-                        <a href="#endpoints-GETme">Get Current User</a>
+                                    <ul id="tocify-subheader-authentication-endpoints" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="authentication-endpoints-POSTlogin">
+                        <a href="#authentication-endpoints-POSTlogin">Login</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="authentication-endpoints-POSTregister">
+                        <a href="#authentication-endpoints-POSTregister">Register</a>
                     </li>
                                                     </ul>
                             </ul>
@@ -113,11 +116,33 @@
                                                     </ul>
                             </ul>
                     <ul id="tocify-header-5" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="misc">
+                    <a href="#misc">Misc</a>
+                </li>
+                                    <ul id="tocify-subheader-misc" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="misc-GETme">
+                        <a href="#misc-GETme">Get Current User</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="misc-PUTme">
+                        <a href="#misc-PUTme">Edit Current User</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="misc-PUTme-password">
+                        <a href="#misc-PUTme-password">Edit Current User</a>
+                    </li>
+                                                    </ul>
+                            </ul>
+                    <ul id="tocify-header-6" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="player-management">
                     <a href="#player-management">Player Management</a>
                 </li>
                                     <ul id="tocify-subheader-player-management" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="player-management-GETplayers--player-">
+                                                    <li class="tocify-item level-2" data-unique="player-management-GETtournaments--tournament--players">
+                        <a href="#player-management-GETtournaments--tournament--players">Get players of a tournament</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="player-management-POSTtournaments--tournament--players">
+                        <a href="#player-management-POSTtournaments--tournament--players">Create a player in a tournament</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="player-management-GETplayers--player-">
                         <a href="#player-management-GETplayers--player-">Get a player</a>
                     </li>
                                     <li class="tocify-item level-2" data-unique="player-management-PUTplayers--player-">
@@ -128,7 +153,7 @@
                     </li>
                                                     </ul>
                             </ul>
-                    <ul id="tocify-header-6" class="tocify-header">
+                    <ul id="tocify-header-7" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="tournament-management">
                     <a href="#tournament-management">Tournament Management</a>
                 </li>
@@ -136,17 +161,11 @@
                                                     <li class="tocify-item level-2" data-unique="tournament-management-GETtournaments">
                         <a href="#tournament-management-GETtournaments">Get tournaments</a>
                     </li>
-                                    <li class="tocify-item level-2" data-unique="tournament-management-POSTtournaments">
-                        <a href="#tournament-management-POSTtournaments">Create a tournament</a>
-                    </li>
-                                    <li class="tocify-item level-2" data-unique="tournament-management-GETtournaments--tournament--players">
-                        <a href="#tournament-management-GETtournaments--tournament--players">Get players of a tournament</a>
-                    </li>
-                                    <li class="tocify-item level-2" data-unique="tournament-management-POSTtournaments--tournament--players">
-                        <a href="#tournament-management-POSTtournaments--tournament--players">Create a player in a tournament</a>
-                    </li>
                                     <li class="tocify-item level-2" data-unique="tournament-management-GETtournaments--tournament-">
                         <a href="#tournament-management-GETtournaments--tournament-">Get a tournament</a>
+                    </li>
+                                    <li class="tocify-item level-2" data-unique="tournament-management-POSTtournaments">
+                        <a href="#tournament-management-POSTtournaments">Create a tournament</a>
                     </li>
                                     <li class="tocify-item level-2" data-unique="tournament-management-PUTtournaments--tournament-">
                         <a href="#tournament-management-PUTtournaments--tournament-">Replace a tournament</a>
@@ -169,7 +188,7 @@
                             <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
                     </ul>
         <ul class="toc-footer" id="last-updated">
-        <li>Last updated: May 25 2022</li>
+        <li>Last updated: June 12 2022</li>
     </ul>
 </div>
 
@@ -177,7 +196,7 @@
     <div class="dark-box"></div>
     <div class="content">
         <h1 id="introduction">Introduction</h1>
-<p>This documentation aims to provide all the information you need to work with our API.</p>
+<p>This API is created to manage simple tournament brackets.</p>
 <aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
 You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
 <blockquote>
@@ -186,34 +205,40 @@ You can switch the language used with the tabs at the top right (or from the nav
 <pre><code class="language-yaml">http://localhost:8000</code></pre>
 
         <h1 id="authenticating-requests">Authenticating requests</h1>
-<p>This API is not authenticated.</p>
+<p>Authenticate requests to this API's endpoints by sending an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_AUTH_KEY}"</code></strong>.</p>
+<p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation below.</p>
+<p>Currently, the only way to procure the JWT Bearer is by providing user credentials in <a href="#authentication-endpoints-POSTlogin">login</a> endpoint.</p>
 
-        <h1 id="endpoints">Endpoints</h1>
+        <h1 id="authentication-endpoints">Authentication Endpoints</h1>
 
     
 
-            <h2 id="endpoints-GETme">Get Current User</h2>
+            <h2 id="authentication-endpoints-POSTlogin">Login</h2>
 
 <p>
-<small class="badge badge-darkred">requires authentication</small>
 </p>
 
-<p>Get current authenticated user.</p>
+<p>Returns JWT, user ID, and username if credentials match.</p>
 
-<span id="example-requests-GETme">
+<span id="example-requests-POSTlogin">
 <blockquote>Example request:</blockquote>
 
 
 <div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/me" \
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/login" \
     --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
+    --header "Accept: application/json" \
+    --data "{
+    \"username\": \"username\",
+    \"password\": \"password\"
+}"
+</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/me"
+    "http://localhost:8000/login"
 );
 
 const headers = {
@@ -221,20 +246,30 @@ const headers = {
     "Accept": "application/json",
 };
 
+let body = {
+    "username": "username",
+    "password": "password"
+};
+
 fetch(url, {
-    method: "GET",
+    method: "POST",
     headers,
+    body: JSON.stringify(body),
 }).then(response =&gt; response.json());</code></pre></div>
 
 
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$response = $client-&gt;get(
-    'http://localhost:8000/me',
+$response = $client-&gt;post(
+    'http://localhost:8000/login',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'username' =&gt; 'username',
+            'password' =&gt; 'password',
         ],
     ]
 );
@@ -246,27 +281,34 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/me'
+url = 'http://localhost:8000/login'
+payload = {
+    "username": "username",
+    "password": "password"
+}
 headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
 
-response = requests.request('GET', url, headers=headers)
+response = requests.request('POST', url, headers=headers, json=payload)
 response.json()</code></pre></div>
 
 </span>
 
-<span id="example-responses-GETme">
+<span id="example-responses-POSTlogin">
             <blockquote>
-            <p>Example response (200, Success):</p>
+            <p>Example response (200, OK):</p>
         </blockquote>
                 <pre>
 
 <code class="language-json">{
-    &quot;id&quot;: 1,
-    &quot;name&quot;: &quot;username&quot;,
-    &quot;email&quot;: &quot;name@example.com&quot;
+    &quot;message&quot;: &quot;Login successful&quot;,
+    &quot;token&quot;: &quot;JWT TOKEN&quot;,
+    &quot;user&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;userame&quot;
+    }
 }</code>
  </pre>
             <blockquote>
@@ -275,75 +317,346 @@ response.json()</code></pre></div>
                 <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;Unauthenticated&quot;
+    &quot;message&quot;: &quot;Already authenticated&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Unprocessable Entity):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Please provide a registered username (and 1 more error)&quot;,
+    &quot;errors&quot;: {
+        &quot;username&quot;: [
+            &quot;Please provide a registered username&quot;
+        ],
+        &quot;password&quot;: [
+            &quot;Plese provide the password&quot;
+        ]
+    }
 }</code>
  </pre>
     </span>
-<span id="execution-results-GETme" hidden>
+<span id="execution-results-POSTlogin" hidden>
     <blockquote>Received response<span
-                id="execution-response-status-GETme"></span>:
+                id="execution-response-status-POSTlogin"></span>:
     </blockquote>
-    <pre class="json"><code id="execution-response-content-GETme"></code></pre>
+    <pre class="json"><code id="execution-response-content-POSTlogin"></code></pre>
 </span>
-<span id="execution-error-GETme" hidden>
+<span id="execution-error-POSTlogin" hidden>
     <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETme"></code></pre>
+    <pre><code id="execution-error-message-POSTlogin"></code></pre>
 </span>
-<form id="form-GETme" data-method="GET"
-      data-path="me"
-      data-authed="1"
+<form id="form-POSTlogin" data-method="POST"
+      data-path="login"
+      data-authed="0"
       data-hasfiles="0"
       data-isarraybody="0"
       data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETme', this);">
+      onsubmit="event.preventDefault(); executeTryOut('POSTlogin', this);">
     <h3>
         Request&nbsp;&nbsp;&nbsp;
                     <button type="button"
                     style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETme"
-                    onclick="tryItOut('GETme');">Try it out ⚡
+                    id="btn-tryout-POSTlogin"
+                    onclick="tryItOut('POSTlogin');">Try it out ⚡
             </button>
             <button type="button"
                     style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETme"
-                    onclick="cancelTryOut('GETme');" hidden>Cancel 🛑
+                    id="btn-canceltryout-POSTlogin"
+                    onclick="cancelTryOut('POSTlogin');" hidden>Cancel 🛑
             </button>&nbsp;&nbsp;
             <button type="submit"
                     style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETme" hidden>Send Request 💥
+                    id="btn-executetryout-POSTlogin" hidden>Send Request 💥
             </button>
             </h3>
             <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>me</code></b>
+            <small class="badge badge-black">POST</small>
+            <b><code>login</code></b>
+        </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>username</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="username"
+               data-endpoint="POSTlogin"
+               value="username"
+               data-component="body" hidden>
+    <br>
+<p>Your username.</p>
         </p>
                 <p>
-            <label id="auth-GETme" hidden>Authorization header:
-                <b><code>Bearer </code></b><input type="text"
-                                                                name="Authorization"
-                                                                data-prefix="Bearer "
-                                                                data-endpoint="GETme"
-                                                                data-component="header"></label>
+            <b><code>password</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="password"
+               data-endpoint="POSTlogin"
+               value="password"
+               data-component="body" hidden>
+    <br>
+<p>Your password.</p>
         </p>
-                </form>
+        </form>
 
     <h3>Response</h3>
     <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
             <p>
-            <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+            <b><code>message</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
 <br>
-<p>Current authenticated user ID.</p>
+<p>Status message.</p>
         </p>
             <p>
-            <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+            <b><code>token</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
 <br>
-<p>Current authenticated user username.</p>
+<p>JWT value.</p>
         </p>
             <p>
+            <b><code>user</code></b>&nbsp;&nbsp;<small>object</small>  &nbsp;
+<br>
+<p>object.</p>
+        </p>
+            <p>
+            <b><code>user.id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>user ID.</p>
+        </p>
+            <p>
+            <b><code>user.name</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>Authenticated username.</p>
+        </p>
+                <h2 id="authentication-endpoints-POSTregister">Register</h2>
+
+<p>
+</p>
+
+<p>Registers a new user. Returns JWT, user ID, and username.</p>
+
+<span id="example-requests-POSTregister">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/register" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"username\": \"username\",
+    \"email\": \"email@example.com\",
+    \"password\": \"password\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/register"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "username": "username",
+    "email": "email@example.com",
+    "password": "password"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$response = $client-&gt;post(
+    'http://localhost:8000/register',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'username' =&gt; 'username',
+            'email' =&gt; 'email@example.com',
+            'password' =&gt; 'password',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/register'
+payload = {
+    "username": "username",
+    "email": "email@example.com",
+    "password": "password"
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTregister">
+            <blockquote>
+            <p>Example response (200, OK):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Registration successful&quot;,
+    &quot;token&quot;: &quot;JWT TOKEN&quot;,
+    &quot;user&quot;: {
+        &quot;id&quot;: 1,
+        &quot;name&quot;: &quot;userame&quot;
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401, Unauthorized):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Already authenticated&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Unprocessable Entity):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Please provide a new username (and 2 more errors)&quot;,
+    &quot;errors&quot;: {
+        &quot;username&quot;: [
+            &quot;Please provide a new username&quot;
+        ],
+        &quot;email&quot;: [
+            &quot;Please provide an email&quot;
+        ],
+        &quot;password&quot;: [
+            &quot;Please provide a password&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTregister" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTregister"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTregister"></code></pre>
+</span>
+<span id="execution-error-POSTregister" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTregister"></code></pre>
+</span>
+<form id="form-POSTregister" data-method="POST"
+      data-path="register"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTregister', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTregister"
+                    onclick="tryItOut('POSTregister');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTregister"
+                    onclick="cancelTryOut('POSTregister');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTregister" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>register</code></b>
+        </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>username</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="username"
+               data-endpoint="POSTregister"
+               value="username"
+               data-component="body" hidden>
+    <br>
+<p>New username.</p>
+        </p>
+                <p>
             <b><code>email</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="email"
+               data-endpoint="POSTregister"
+               value="email@example.com"
+               data-component="body" hidden>
+    <br>
+<p>New email.</p>
+        </p>
+                <p>
+            <b><code>password</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="password"
+               data-endpoint="POSTregister"
+               value="password"
+               data-component="body" hidden>
+    <br>
+<p>Your password.</p>
+        </p>
+        </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+            <p>
+            <b><code>message</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
 <br>
-<p>Current authenticated user email.</p>
+<p>Status message.</p>
+        </p>
+            <p>
+            <b><code>token</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>JWT value.</p>
+        </p>
+            <p>
+            <b><code>user</code></b>&nbsp;&nbsp;<small>object</small>  &nbsp;
+<br>
+<p>object.</p>
+        </p>
+            <p>
+            <b><code>user.id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>user ID.</p>
+        </p>
+            <p>
+            <b><code>user.name</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>Authenticated username.</p>
         </p>
             <h1 id="manage-brackets">Manage Brackets</h1>
 
@@ -362,18 +675,18 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/tournaments/4/brackets?dataStructure=rerum" \
+    --get "http://localhost:8000/tournaments/16/brackets?dataStructure=et" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/4/brackets"
+    "http://localhost:8000/tournaments/16/brackets"
 );
 
 const params = {
-    "dataStructure": "rerum",
+    "dataStructure": "et",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -392,14 +705,14 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;get(
-    'http://localhost:8000/tournaments/4/brackets',
+    'http://localhost:8000/tournaments/16/brackets',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
         'query' =&gt; [
-            'dataStructure'=&gt; 'rerum',
+            'dataStructure'=&gt; 'et',
         ],
     ]
 );
@@ -411,9 +724,9 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/4/brackets'
+url = 'http://localhost:8000/tournaments/16/brackets'
 params = {
-  'dataStructure': 'rerum',
+  'dataStructure': 'et',
 }
 headers = {
   'Content-Type': 'application/json',
@@ -489,7 +802,7 @@ response.json()</code></pre></div>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 58
+x-ratelimit-remaining: 59
 vary: Origin
  </code></pre>
         </details>         <pre>
@@ -544,7 +857,7 @@ vary: Origin
                 <input type="number"
                name="tournament"
                data-endpoint="GETtournaments--tournament--brackets"
-               value="4"
+               value="16"
                data-component="url" hidden>
     <br>
 
@@ -555,7 +868,7 @@ vary: Origin
                 <input type="text"
                name="dataStructure"
                data-endpoint="GETtournaments--tournament--brackets"
-               value="rerum"
+               value="et"
                data-component="query" hidden>
     <br>
 <p>enum(tree,list) Defaults to &quot;list&quot;. Returns created brackets in tree or list.<br/>For <strong>trees</strong>, brackets will be structured recursively in a <strong><code>binary tree</code></strong>, under the <code>prev_match</code> attribute with the last match as root.<br/>For <strong>lists</strong>, brackets will be structured in an <strong><code>array</code></strong>.</p>
@@ -652,24 +965,26 @@ Only tournament owner can create or replace brackets.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/tournaments/13/brackets?dataStructure=dolor&amp;empty=1" \
+    "http://localhost:8000/tournaments/2/brackets?dataStructure=tempore&amp;empty=" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/13/brackets"
+    "http://localhost:8000/tournaments/2/brackets"
 );
 
 const params = {
-    "dataStructure": "dolor",
-    "empty": "1",
+    "dataStructure": "tempore",
+    "empty": "0",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -683,15 +998,16 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;put(
-    'http://localhost:8000/tournaments/13/brackets',
+    'http://localhost:8000/tournaments/2/brackets',
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
         'query' =&gt; [
-            'dataStructure'=&gt; 'dolor',
-            'empty'=&gt; '1',
+            'dataStructure'=&gt; 'tempore',
+            'empty'=&gt; '0',
         ],
     ]
 );
@@ -703,12 +1019,13 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/13/brackets'
+url = 'http://localhost:8000/tournaments/2/brackets'
 params = {
-  'dataStructure': 'dolor',
-  'empty': '1',
+  'dataStructure': 'tempore',
+  'empty': '0',
 }
 headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
@@ -834,7 +1151,7 @@ response.json()</code></pre></div>
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('PUTtournaments--tournament--brackets', this);">
     <h3>
@@ -872,7 +1189,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="PUTtournaments--tournament--brackets"
-               value="13"
+               value="2"
                data-component="url" hidden>
     <br>
 
@@ -883,7 +1200,7 @@ response.json()</code></pre></div>
                 <input type="text"
                name="dataStructure"
                data-endpoint="PUTtournaments--tournament--brackets"
-               value="dolor"
+               value="tempore"
                data-component="query" hidden>
     <br>
 <p>enum(tree,list) Defaults to &quot;list&quot;. Returns created brackets in tree or list.<br/>For <strong>trees</strong>, brackets will be structured recursively in a <strong><code>binary tree</code></strong>, under the <code>prev_match</code> attribute with the last match as root.<br/>For <strong>lists</strong>, brackets will be structured in an <strong><code>array</code></strong>.</p>
@@ -1008,27 +1325,29 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/brackets/5/player" \
+    "http://localhost:8000/brackets/6/player" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"player_id\": 20
+    \"player_id\": 10
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/brackets/5/player"
+    "http://localhost:8000/brackets/6/player"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
-    "player_id": 20
+    "player_id": 10
 };
 
 fetch(url, {
@@ -1041,14 +1360,15 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;put(
-    'http://localhost:8000/brackets/5/player',
+    'http://localhost:8000/brackets/6/player',
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
-            'player_id' =&gt; 20,
+            'player_id' =&gt; 10,
         ],
     ]
 );
@@ -1060,11 +1380,12 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/brackets/5/player'
+url = 'http://localhost:8000/brackets/6/player'
 payload = {
-    "player_id": 20
+    "player_id": 10
 }
 headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
@@ -1118,7 +1439,7 @@ response.json()</code></pre></div>
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('PUTbrackets--bracket--player', this);">
     <h3>
@@ -1156,7 +1477,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="bracket"
                data-endpoint="PUTbrackets--bracket--player"
-               value="5"
+               value="6"
                data-component="url" hidden>
     <br>
 
@@ -1167,7 +1488,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="player_id"
                data-endpoint="PUTbrackets--bracket--player"
-               value="20"
+               value="10"
                data-component="body" hidden>
     <br>
 <p>Target player.</p>
@@ -1191,14 +1512,14 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/tournaments/18/matches/6" \
+    --get "http://localhost:8000/tournaments/15/matches/20" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/18/matches/6"
+    "http://localhost:8000/tournaments/15/matches/20"
 );
 
 const headers = {
@@ -1215,7 +1536,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;get(
-    'http://localhost:8000/tournaments/18/matches/6',
+    'http://localhost:8000/tournaments/15/matches/20',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
@@ -1231,7 +1552,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/18/matches/6'
+url = 'http://localhost:8000/tournaments/15/matches/20'
 headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json'
@@ -1357,7 +1678,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="GETtournaments--tournament--matches--match_num-"
-               value="18"
+               value="15"
                data-component="url" hidden>
     <br>
 
@@ -1367,7 +1688,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="match_num"
                data-endpoint="GETtournaments--tournament--matches--match_num-"
-               value="6"
+               value="20"
                data-component="url" hidden>
     <br>
 
@@ -1435,27 +1756,29 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/tournaments/17/matches/1/winner" \
+    "http://localhost:8000/tournaments/13/matches/4/winner" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"player_id\": \"quos\"
+    \"player_id\": \"odit\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/17/matches/1/winner"
+    "http://localhost:8000/tournaments/13/matches/4/winner"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
 
 let body = {
-    "player_id": "quos"
+    "player_id": "odit"
 };
 
 fetch(url, {
@@ -1468,14 +1791,15 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;put(
-    'http://localhost:8000/tournaments/17/matches/1/winner',
+    'http://localhost:8000/tournaments/13/matches/4/winner',
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
-            'player_id' =&gt; 'quos',
+            'player_id' =&gt; 'odit',
         ],
     ]
 );
@@ -1487,11 +1811,12 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/17/matches/1/winner'
+url = 'http://localhost:8000/tournaments/13/matches/4/winner'
 payload = {
-    "player_id": "quos"
+    "player_id": "odit"
 }
 headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
@@ -1554,7 +1879,7 @@ response.json()</code></pre></div>
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('PUTtournaments--tournament--matches--match_num--winner', this);">
     <h3>
@@ -1592,7 +1917,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="PUTtournaments--tournament--matches--match_num--winner"
-               value="17"
+               value="13"
                data-component="url" hidden>
     <br>
 
@@ -1602,7 +1927,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="match_num"
                data-endpoint="PUTtournaments--tournament--matches--match_num--winner"
-               value="1"
+               value="4"
                data-component="url" hidden>
     <br>
 <p>Match number of a tournament.</p>
@@ -1613,16 +1938,1030 @@ response.json()</code></pre></div>
                 <input type="text"
                name="player_id"
                data-endpoint="PUTtournaments--tournament--matches--match_num--winner"
-               value="quos"
+               value="odit"
                data-component="body" hidden>
     <br>
 <p>The winner of the match.</p>
         </p>
         </form>
 
-        <h1 id="player-management">Player Management</h1>
+        <h1 id="misc">Misc</h1>
+
+    
+
+            <h2 id="misc-GETme">Get Current User</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Get current authenticated user.</p>
+
+<span id="example-requests-GETme">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/me" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/me"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$response = $client-&gt;get(
+    'http://localhost:8000/me',
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/me'
+headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETme">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;username&quot;,
+    &quot;email&quot;: &quot;name@example.com&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401, Unauthorized):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETme" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETme"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETme"></code></pre>
+</span>
+<span id="execution-error-GETme" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETme"></code></pre>
+</span>
+<form id="form-GETme" data-method="GET"
+      data-path="me"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETme', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETme"
+                    onclick="tryItOut('GETme');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETme"
+                    onclick="cancelTryOut('GETme');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETme" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>me</code></b>
+        </p>
+                <p>
+            <label id="auth-GETme" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="GETme"
+                                                                data-component="header"></label>
+        </p>
+                </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+            <p>
+            <b><code>id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>Current authenticated user ID.</p>
+        </p>
+            <p>
+            <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Current authenticated user username.</p>
+        </p>
+            <p>
+            <b><code>email</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Current authenticated user email.</p>
+        </p>
+                <h2 id="misc-PUTme">Edit Current User</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Edit current authenticated user.</p>
+
+<span id="example-requests-PUTme">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8000/me" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"username\": \"username\",
+    \"email\": \"email@example.com\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/me"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "username": "username",
+    "email": "email@example.com"
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$response = $client-&gt;put(
+    'http://localhost:8000/me',
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'username' =&gt; 'username',
+            'email' =&gt; 'email@example.com',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/me'
+payload = {
+    "username": "username",
+    "email": "email@example.com"
+}
+headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTme">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;id&quot;: &quot;JWT Token&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401, Unauthorized):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Unprocessable Entity):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Please provide a new username (and 1 more error)&quot;,
+    &quot;errors&quot;: {
+        &quot;username&quot;: [
+            &quot;Please provide a new username&quot;
+        ],
+        &quot;email&quot;: [
+            &quot;Please provide an email&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PUTme" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTme"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTme"></code></pre>
+</span>
+<span id="execution-error-PUTme" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTme"></code></pre>
+</span>
+<form id="form-PUTme" data-method="PUT"
+      data-path="me"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTme', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTme"
+                    onclick="tryItOut('PUTme');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTme"
+                    onclick="cancelTryOut('PUTme');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTme" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>me</code></b>
+        </p>
+                <p>
+            <label id="auth-PUTme" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="PUTme"
+                                                                data-component="header"></label>
+        </p>
+                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>username</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="username"
+               data-endpoint="PUTme"
+               value="username"
+               data-component="body" hidden>
+    <br>
+<p>Changed username.</p>
+        </p>
+                <p>
+            <b><code>email</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="email"
+               data-endpoint="PUTme"
+               value="email@example.com"
+               data-component="body" hidden>
+    <br>
+<p>Changed email.</p>
+        </p>
+        </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+            <p>
+            <b><code>token</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Return a new JWT token.</p>
+        </p>
+                <h2 id="misc-PUTme-password">Edit Current User</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Change current authenticated user's password.</p>
+
+<span id="example-requests-PUTme-password">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "http://localhost:8000/me/password" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"oldPassword\": \"password\",
+    \"password\": \"newPassword\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/me/password"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "oldPassword": "password",
+    "password": "newPassword"
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$response = $client-&gt;put(
+    'http://localhost:8000/me/password',
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'oldPassword' =&gt; 'password',
+            'password' =&gt; 'newPassword',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/me/password'
+payload = {
+    "oldPassword": "password",
+    "password": "newPassword"
+}
+headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('PUT', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTme-password">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Password changed&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (401, Unauthorized):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Unprocessable Entity):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Please give the old password (and 1 more error)&quot;,
+    &quot;errors&quot;: {
+        &quot;oldPassword&quot;: [
+            &quot;Please give the old password&quot;
+        ],
+        &quot;password&quot;: [
+            &quot;Please provide a password&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-PUTme-password" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTme-password"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTme-password"></code></pre>
+</span>
+<span id="execution-error-PUTme-password" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTme-password"></code></pre>
+</span>
+<form id="form-PUTme-password" data-method="PUT"
+      data-path="me/password"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTme-password', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTme-password"
+                    onclick="tryItOut('PUTme-password');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTme-password"
+                    onclick="cancelTryOut('PUTme-password');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTme-password" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>me/password</code></b>
+        </p>
+                <p>
+            <label id="auth-PUTme-password" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="PUTme-password"
+                                                                data-component="header"></label>
+        </p>
+                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>oldPassword</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="oldPassword"
+               data-endpoint="PUTme-password"
+               value="password"
+               data-component="body" hidden>
+    <br>
+<p>Old password. Necessary for security reasons.</p>
+        </p>
+                <p>
+            <b><code>password</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="password"
+               data-endpoint="PUTme-password"
+               value="newPassword"
+               data-component="body" hidden>
+    <br>
+<p>New password.</p>
+        </p>
+        </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+            <p>
+            <b><code>message</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Status message.</p>
+        </p>
+            <h1 id="player-management">Player Management</h1>
 
     <p>APIS for managing players</p>
+
+            <h2 id="player-management-GETtournaments--tournament--players">Get players of a tournament</h2>
+
+<p>
+</p>
+
+<p>Players list is ordered in descending order by creation time.</p>
+
+<span id="example-requests-GETtournaments--tournament--players">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8000/tournaments/4/players?page=1&amp;limit=10" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/tournaments/4/players"
+);
+
+const params = {
+    "page": "1",
+    "limit": "10",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$response = $client-&gt;get(
+    'http://localhost:8000/tournaments/4/players',
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'page'=&gt; '1',
+            'limit'=&gt; '10',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/tournaments/4/players'
+params = {
+  'page': '1',
+  'limit': '10',
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETtournaments--tournament--players">
+            <blockquote>
+            <p>Example response (200, Success):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;count&quot;: 100,
+    &quot;total_pages&quot;: 10,
+    &quot;page&quot;: 1,
+    &quot;next_page&quot;: &quot;/tournaments/1/players?page=2&quot;,
+    &quot;prev_page&quot;: null,
+    &quot;results&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;name&quot;: &quot;Adi&quot;,
+            &quot;_url&quot;: &quot;/players/1&quot;,
+            &quot;tournament_url&quot;: &quot;/tournaments/1&quot;,
+            &quot;created_at&quot;: &quot;1970-01-01 00:00:00&quot;,
+            &quot;updated_at&quot;: &quot;1970-01-01 00:00:00&quot;
+        }
+    ]
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Not Found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Reason of error&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETtournaments--tournament--players" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETtournaments--tournament--players"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETtournaments--tournament--players"></code></pre>
+</span>
+<span id="execution-error-GETtournaments--tournament--players" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETtournaments--tournament--players"></code></pre>
+</span>
+<form id="form-GETtournaments--tournament--players" data-method="GET"
+      data-path="tournaments/{tournament}/players"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETtournaments--tournament--players', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETtournaments--tournament--players"
+                    onclick="tryItOut('GETtournaments--tournament--players');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETtournaments--tournament--players"
+                    onclick="cancelTryOut('GETtournaments--tournament--players');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETtournaments--tournament--players" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>tournaments/{tournament}/players</code></b>
+        </p>
+                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>tournament</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="tournament"
+               data-endpoint="GETtournaments--tournament--players"
+               value="4"
+               data-component="url" hidden>
+    <br>
+
+            </p>
+                        <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                    <p>
+                <b><code>page</code></b>&nbsp;&nbsp;<small>integer</small>     <i>optional</i> &nbsp;
+                <input type="number"
+               name="page"
+               data-endpoint="GETtournaments--tournament--players"
+               value="1"
+               data-component="query" hidden>
+    <br>
+<p>Defaults to <code>1</code>. Values less than 1 will default to 1.</p>
+            </p>
+                    <p>
+                <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>     <i>optional</i> &nbsp;
+                <input type="text"
+               name="name"
+               data-endpoint="GETtournaments--tournament--players"
+               value=""
+               data-component="query" hidden>
+    <br>
+<p>Search for player that contains <code>name</code> keyword.</p>
+            </p>
+                    <p>
+                <b><code>limit</code></b>&nbsp;&nbsp;<small>integer</small>     <i>optional</i> &nbsp;
+                <input type="number"
+               name="limit"
+               data-endpoint="GETtournaments--tournament--players"
+               value="10"
+               data-component="query" hidden>
+    <br>
+<p>Defaults to <code>10</code>. Values less than 1 will default to 1.</p>
+            </p>
+                </form>
+
+    <h3>Response</h3>
+    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
+            <p>
+            <b><code>count</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+
+        </p>
+            <p>
+            <b><code>total_pages</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+
+        </p>
+            <p>
+            <b><code>next_page</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Returns <code>null</code> if last page is reached.</p>
+        </p>
+            <p>
+            <b><code>prev_page</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Returns <code>null</code> if it is the first page.</p>
+        </p>
+            <p>
+            <b><code>results</code></b>&nbsp;&nbsp;<small>object[]</small>  &nbsp;
+<br>
+<p>List of players in tournament.</p>
+        </p>
+            <p>
+            <b><code>results.id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+<br>
+<p>Player ID.</p>
+        </p>
+            <p>
+            <b><code>results.name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>Player name.</p>
+        </p>
+            <p>
+            <b><code>results._url</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>URL to player resource.</p>
+        </p>
+            <p>
+            <b><code>results.tournament_url</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<br>
+<p>URL to a tournament which the player belongs to.</p>
+        </p>
+                <h2 id="player-management-POSTtournaments--tournament--players">Create a player in a tournament</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Only tournament owner can create a player in a tournament.</p>
+
+<span id="example-requests-POSTtournaments--tournament--players">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/tournaments/7/players" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"name\": \"Adi\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/tournaments/7/players"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "name": "Adi"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$response = $client-&gt;post(
+    'http://localhost:8000/tournaments/7/players',
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'name' =&gt; 'Adi',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/tournaments/7/players'
+payload = {
+    "name": "Adi"
+}
+headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTtournaments--tournament--players">
+            <blockquote>
+            <p>Example response (401, Unauthorized):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (201, Created):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;Adi&quot;,
+    &quot;_url&quot;: &quot;/players/1&quot;,
+    &quot;tournament_url&quot;: &quot;/tournaments/1&quot;,
+    &quot;created_at&quot;: &quot;1970-01-01 00:00:00&quot;,
+    &quot;updated_at&quot;: &quot;1970-01-01 00:00:00&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (404, Not Found):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Reason of error&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Invalid Request Body):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Please give a name to the tournament (and 1 more error)&quot;,
+    &quot;errors&quot;: {
+        &quot;name&quot;: [
+            &quot;Please give a name to the tournament&quot;
+        ],
+        &quot;description&quot;: [
+            &quot;Description must be under 500 characters&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTtournaments--tournament--players" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTtournaments--tournament--players"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTtournaments--tournament--players"></code></pre>
+</span>
+<span id="execution-error-POSTtournaments--tournament--players" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTtournaments--tournament--players"></code></pre>
+</span>
+<form id="form-POSTtournaments--tournament--players" data-method="POST"
+      data-path="tournaments/{tournament}/players"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTtournaments--tournament--players', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTtournaments--tournament--players"
+                    onclick="tryItOut('POSTtournaments--tournament--players');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTtournaments--tournament--players"
+                    onclick="cancelTryOut('POSTtournaments--tournament--players');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTtournaments--tournament--players" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>tournaments/{tournament}/players</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTtournaments--tournament--players" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="POSTtournaments--tournament--players"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <p>
+                <b><code>tournament</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
+                <input type="number"
+               name="tournament"
+               data-endpoint="POSTtournaments--tournament--players"
+               value="7"
+               data-component="url" hidden>
+    <br>
+
+            </p>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="name"
+               data-endpoint="POSTtournaments--tournament--players"
+               value="Adi"
+               data-component="body" hidden>
+    <br>
+<p>Name of the player. Must be less than or equal to 100 characters. Must not be greater than 100 characters.</p>
+        </p>
+        </form>
 
             <h2 id="player-management-GETplayers--player-">Get a player</h2>
 
@@ -1637,14 +2976,14 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/players/15" \
+    --get "http://localhost:8000/players/8" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/players/15"
+    "http://localhost:8000/players/8"
 );
 
 const headers = {
@@ -1661,7 +3000,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;get(
-    'http://localhost:8000/players/15',
+    'http://localhost:8000/players/8',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
@@ -1677,7 +3016,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/players/15'
+url = 'http://localhost:8000/players/8'
 headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json'
@@ -1758,7 +3097,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="player"
                data-endpoint="GETplayers--player-"
-               value="15"
+               value="8"
                data-component="url" hidden>
     <br>
 
@@ -1800,6 +3139,7 @@ response.json()</code></pre></div>
                 <h2 id="player-management-PUTplayers--player-">Update a player</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1810,7 +3150,8 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/players/18" \
+    "http://localhost:8000/players/19" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -1821,10 +3162,11 @@ response.json()</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/players/18"
+    "http://localhost:8000/players/19"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -1843,9 +3185,10 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;put(
-    'http://localhost:8000/players/18',
+    'http://localhost:8000/players/19',
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
@@ -1862,11 +3205,12 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/players/18'
+url = 'http://localhost:8000/players/19'
 payload = {
     "name": "Adi"
 }
 headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
@@ -1930,10 +3274,10 @@ response.json()</code></pre></div>
 </span>
 <form id="form-PUTplayers--player-" data-method="PUT"
       data-path="players/{player}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('PUTplayers--player-', this);">
     <h3>
@@ -1957,13 +3301,21 @@ response.json()</code></pre></div>
             <small class="badge badge-darkblue">PUT</small>
             <b><code>players/{player}</code></b>
         </p>
-                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                <p>
+            <label id="auth-PUTplayers--player-" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="PUTplayers--player-"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <p>
                 <b><code>player</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
                 <input type="number"
                name="player"
                data-endpoint="PUTplayers--player-"
-               value="18"
+               value="19"
                data-component="url" hidden>
     <br>
 
@@ -1984,6 +3336,7 @@ response.json()</code></pre></div>
             <h2 id="player-management-DELETEplayers--player-">Delete a player</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 
@@ -1994,17 +3347,19 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8000/players/20" \
+    "http://localhost:8000/players/17" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/players/20"
+    "http://localhost:8000/players/17"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -2018,9 +3373,10 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;delete(
-    'http://localhost:8000/players/20',
+    'http://localhost:8000/players/17',
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
@@ -2034,8 +3390,9 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/players/20'
+url = 'http://localhost:8000/players/17'
 headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
@@ -2077,10 +3434,10 @@ response.json()</code></pre></div>
 </span>
 <form id="form-DELETEplayers--player-" data-method="DELETE"
       data-path="players/{player}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('DELETEplayers--player-', this);">
     <h3>
@@ -2104,13 +3461,21 @@ response.json()</code></pre></div>
             <small class="badge badge-red">DELETE</small>
             <b><code>players/{player}</code></b>
         </p>
-                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                <p>
+            <label id="auth-DELETEplayers--player-" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="DELETEplayers--player-"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <p>
                 <b><code>player</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
                 <input type="number"
                name="player"
                data-endpoint="DELETEplayers--player-"
-               value="20"
+               value="17"
                data-component="url" hidden>
     <br>
 
@@ -2134,7 +3499,7 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/tournaments?page=1&amp;limit=10&amp;user=14" \
+    --get "http://localhost:8000/tournaments?page=1&amp;limit=10&amp;user=11" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -2147,7 +3512,7 @@ response.json()</code></pre></div>
 const params = {
     "page": "1",
     "limit": "10",
-    "user": "14",
+    "user": "11",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -2175,7 +3540,7 @@ $response = $client-&gt;get(
         'query' =&gt; [
             'page'=&gt; '1',
             'limit'=&gt; '10',
-            'user'=&gt; '14',
+            'user'=&gt; '11',
         ],
     ]
 );
@@ -2191,7 +3556,7 @@ url = 'http://localhost:8000/tournaments'
 params = {
   'page': '1',
   'limit': '10',
-  'user': '14',
+  'user': '11',
 }
 headers = {
   'Content-Type': 'application/json',
@@ -2313,7 +3678,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="user"
                data-endpoint="GETtournaments"
-               value="14"
+               value="11"
                data-component="query" hidden>
     <br>
 <p>Get tournaments owned by specified user with id.</p>
@@ -2382,649 +3747,7 @@ response.json()</code></pre></div>
 <br>
 <p>Last update timestamp.</p>
         </p>
-                <h2 id="tournament-management-POSTtournaments">Create a tournament</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-
-
-<span id="example-requests-POSTtournaments">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/tournaments" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --data "{
-    \"name\": \"Tournament Awesome\",
-    \"description\": \"Lorem ipsum dolor sit...\"
-}"
-</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-let body = {
-    "name": "Tournament Awesome",
-    "description": "Lorem ipsum dolor sit..."
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(body),
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="php-example">
-    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$response = $client-&gt;post(
-    'http://localhost:8000/tournaments',
-    [
-        'headers' =&gt; [
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-        'json' =&gt; [
-            'name' =&gt; 'Tournament Awesome',
-            'description' =&gt; 'Lorem ipsum dolor sit...',
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre></div>
-
-
-<div class="python-example">
-    <pre><code class="language-python">import requests
-import json
-
-url = 'http://localhost:8000/tournaments'
-payload = {
-    "name": "Tournament Awesome",
-    "description": "Lorem ipsum dolor sit..."
-}
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json'
-}
-
-response = requests.request('POST', url, headers=headers, json=payload)
-response.json()</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTtournaments">
-            <blockquote>
-            <p>Example response (401, Unauthorized):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json">{
-    &quot;message&quot;: &quot;Unauthenticated&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (201, Created):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json">{
-    &quot;id&quot;: 1,
-    &quot;name&quot;: &quot;Tournament 1&quot;,
-    &quot;description&quot;: &quot;The mind is willing, but the body is spongy and bruised&quot;,
-    &quot;started&quot;: false,
-    &quot;created_at&quot;: &quot;1970-01-01 00:00:00&quot;,
-    &quot;updated_at&quot;: &quot;1970-01-01 00:00:00&quot;,
-    &quot;_url&quot;: &quot;/tournaments/1&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (422, Invalid Request Body):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json">{
-    &quot;message&quot;: &quot;Please give a name to the tournament (and 1 more error)&quot;,
-    &quot;errors&quot;: {
-        &quot;name&quot;: [
-            &quot;Please give a name to the tournament&quot;
-        ],
-        &quot;description&quot;: [
-            &quot;Description must be under 500 characters&quot;
-        ]
-    }
-}</code>
- </pre>
-    </span>
-<span id="execution-results-POSTtournaments" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-POSTtournaments"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTtournaments"></code></pre>
-</span>
-<span id="execution-error-POSTtournaments" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTtournaments"></code></pre>
-</span>
-<form id="form-POSTtournaments" data-method="POST"
-      data-path="tournaments"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTtournaments', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTtournaments"
-                    onclick="tryItOut('POSTtournaments');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTtournaments"
-                    onclick="cancelTryOut('POSTtournaments');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTtournaments" hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>tournaments</code></b>
-        </p>
-                <p>
-            <label id="auth-POSTtournaments" hidden>Authorization header:
-                <b><code>Bearer </code></b><input type="text"
-                                                                name="Authorization"
-                                                                data-prefix="Bearer "
-                                                                data-endpoint="POSTtournaments"
-                                                                data-component="header"></label>
-        </p>
-                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
-        <p>
-            <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
-                <input type="text"
-               name="name"
-               data-endpoint="POSTtournaments"
-               value="Tournament Awesome"
-               data-component="body" hidden>
-    <br>
-<p>Name of the tournament. Must be less than or equal to 100 characters. Must not be greater than 100 characters.</p>
-        </p>
-                <p>
-            <b><code>description</code></b>&nbsp;&nbsp;<small>string</small>     <i>optional</i> &nbsp;
-                <input type="text"
-               name="description"
-               data-endpoint="POSTtournaments"
-               value="Lorem ipsum dolor sit..."
-               data-component="body" hidden>
-    <br>
-<p>Short description of the tournament. Must be less than or equal to 500 characters. Note: WYSIWYG tags and markdowns are considered too. Must not be greater than 500 characters.</p>
-        </p>
-        </form>
-
-            <h2 id="tournament-management-GETtournaments--tournament--players">Get players of a tournament</h2>
-
-<p>
-</p>
-
-<p>Players list is ordered in descending order by creation time.</p>
-
-<span id="example-requests-GETtournaments--tournament--players">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/tournaments/19/players?page=1&amp;limit=10" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/19/players"
-);
-
-const params = {
-    "page": "1",
-    "limit": "10",
-};
-Object.keys(params)
-    .forEach(key =&gt; url.searchParams.append(key, params[key]));
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="php-example">
-    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$response = $client-&gt;get(
-    'http://localhost:8000/tournaments/19/players',
-    [
-        'headers' =&gt; [
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-        'query' =&gt; [
-            'page'=&gt; '1',
-            'limit'=&gt; '10',
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre></div>
-
-
-<div class="python-example">
-    <pre><code class="language-python">import requests
-import json
-
-url = 'http://localhost:8000/tournaments/19/players'
-params = {
-  'page': '1',
-  'limit': '10',
-}
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json'
-}
-
-response = requests.request('GET', url, headers=headers, params=params)
-response.json()</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETtournaments--tournament--players">
-            <blockquote>
-            <p>Example response (200, Success):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json">{
-    &quot;count&quot;: 100,
-    &quot;total_pages&quot;: 10,
-    &quot;page&quot;: 1,
-    &quot;next_page&quot;: &quot;/tournaments/1/players?page=2&quot;,
-    &quot;prev_page&quot;: null,
-    &quot;results&quot;: [
-        {
-            &quot;id&quot;: 1,
-            &quot;name&quot;: &quot;Adi&quot;,
-            &quot;_url&quot;: &quot;/players/1&quot;,
-            &quot;tournament_url&quot;: &quot;/tournaments/1&quot;,
-            &quot;created_at&quot;: &quot;1970-01-01 00:00:00&quot;,
-            &quot;updated_at&quot;: &quot;1970-01-01 00:00:00&quot;
-        }
-    ]
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (404, Not Found):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json">{
-    &quot;message&quot;: &quot;Reason of error&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETtournaments--tournament--players" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETtournaments--tournament--players"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETtournaments--tournament--players"></code></pre>
-</span>
-<span id="execution-error-GETtournaments--tournament--players" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETtournaments--tournament--players"></code></pre>
-</span>
-<form id="form-GETtournaments--tournament--players" data-method="GET"
-      data-path="tournaments/{tournament}/players"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETtournaments--tournament--players', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETtournaments--tournament--players"
-                    onclick="tryItOut('GETtournaments--tournament--players');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETtournaments--tournament--players"
-                    onclick="cancelTryOut('GETtournaments--tournament--players');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETtournaments--tournament--players" hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>tournaments/{tournament}/players</code></b>
-        </p>
-                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <p>
-                <b><code>tournament</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
-                <input type="number"
-               name="tournament"
-               data-endpoint="GETtournaments--tournament--players"
-               value="19"
-               data-component="url" hidden>
-    <br>
-
-            </p>
-                        <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
-                    <p>
-                <b><code>page</code></b>&nbsp;&nbsp;<small>integer</small>     <i>optional</i> &nbsp;
-                <input type="number"
-               name="page"
-               data-endpoint="GETtournaments--tournament--players"
-               value="1"
-               data-component="query" hidden>
-    <br>
-<p>Defaults to <code>1</code>. Values less than 1 will default to 1.</p>
-            </p>
-                    <p>
-                <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>     <i>optional</i> &nbsp;
-                <input type="text"
-               name="name"
-               data-endpoint="GETtournaments--tournament--players"
-               value=""
-               data-component="query" hidden>
-    <br>
-<p>Search for player that contains <code>name</code> keyword.</p>
-            </p>
-                    <p>
-                <b><code>limit</code></b>&nbsp;&nbsp;<small>integer</small>     <i>optional</i> &nbsp;
-                <input type="number"
-               name="limit"
-               data-endpoint="GETtournaments--tournament--players"
-               value="10"
-               data-component="query" hidden>
-    <br>
-<p>Defaults to <code>10</code>. Values less than 1 will default to 1.</p>
-            </p>
-                </form>
-
-    <h3>Response</h3>
-    <h4 class="fancy-heading-panel"><b>Response Fields</b></h4>
-            <p>
-            <b><code>count</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
-<br>
-
-        </p>
-            <p>
-            <b><code>total_pages</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
-<br>
-
-        </p>
-            <p>
-            <b><code>next_page</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
-<br>
-<p>Returns <code>null</code> if last page is reached.</p>
-        </p>
-            <p>
-            <b><code>prev_page</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
-<br>
-<p>Returns <code>null</code> if it is the first page.</p>
-        </p>
-            <p>
-            <b><code>results</code></b>&nbsp;&nbsp;<small>object[]</small>  &nbsp;
-<br>
-<p>List of players in tournament.</p>
-        </p>
-            <p>
-            <b><code>results.id</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
-<br>
-<p>Player ID.</p>
-        </p>
-            <p>
-            <b><code>results.name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
-<br>
-<p>Player name.</p>
-        </p>
-            <p>
-            <b><code>results._url</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
-<br>
-<p>URL to player resource.</p>
-        </p>
-            <p>
-            <b><code>results.tournament_url</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
-<br>
-<p>URL to a tournament which the player belongs to.</p>
-        </p>
-                <h2 id="tournament-management-POSTtournaments--tournament--players">Create a player in a tournament</h2>
-
-<p>
-<small class="badge badge-darkred">requires authentication</small>
-</p>
-
-<p>Only tournament owner can create a player in a tournament.</p>
-
-<span id="example-requests-POSTtournaments--tournament--players">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/tournaments/1/players" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --data "{
-    \"name\": \"Adi\"
-}"
-</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/1/players"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-let body = {
-    "name": "Adi"
-};
-
-fetch(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(body),
-}).then(response =&gt; response.json());</code></pre></div>
-
-
-<div class="php-example">
-    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
-$response = $client-&gt;post(
-    'http://localhost:8000/tournaments/1/players',
-    [
-        'headers' =&gt; [
-            'Content-Type' =&gt; 'application/json',
-            'Accept' =&gt; 'application/json',
-        ],
-        'json' =&gt; [
-            'name' =&gt; 'Adi',
-        ],
-    ]
-);
-$body = $response-&gt;getBody();
-print_r(json_decode((string) $body));</code></pre></div>
-
-
-<div class="python-example">
-    <pre><code class="language-python">import requests
-import json
-
-url = 'http://localhost:8000/tournaments/1/players'
-payload = {
-    "name": "Adi"
-}
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json'
-}
-
-response = requests.request('POST', url, headers=headers, json=payload)
-response.json()</code></pre></div>
-
-</span>
-
-<span id="example-responses-POSTtournaments--tournament--players">
-            <blockquote>
-            <p>Example response (401, Unauthorized):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json">{
-    &quot;message&quot;: &quot;Unauthenticated&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (201, Created):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json">{
-    &quot;id&quot;: 1,
-    &quot;name&quot;: &quot;Adi&quot;,
-    &quot;_url&quot;: &quot;/players/1&quot;,
-    &quot;tournament_url&quot;: &quot;/tournaments/1&quot;,
-    &quot;created_at&quot;: &quot;1970-01-01 00:00:00&quot;,
-    &quot;updated_at&quot;: &quot;1970-01-01 00:00:00&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (404, Not Found):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json">{
-    &quot;message&quot;: &quot;Reason of error&quot;
-}</code>
- </pre>
-            <blockquote>
-            <p>Example response (422, Invalid Request Body):</p>
-        </blockquote>
-                <pre>
-
-<code class="language-json">{
-    &quot;message&quot;: &quot;Please give a name to the tournament (and 1 more error)&quot;,
-    &quot;errors&quot;: {
-        &quot;name&quot;: [
-            &quot;Please give a name to the tournament&quot;
-        ],
-        &quot;description&quot;: [
-            &quot;Description must be under 500 characters&quot;
-        ]
-    }
-}</code>
- </pre>
-    </span>
-<span id="execution-results-POSTtournaments--tournament--players" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-POSTtournaments--tournament--players"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-POSTtournaments--tournament--players"></code></pre>
-</span>
-<span id="execution-error-POSTtournaments--tournament--players" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-POSTtournaments--tournament--players"></code></pre>
-</span>
-<form id="form-POSTtournaments--tournament--players" data-method="POST"
-      data-path="tournaments/{tournament}/players"
-      data-authed="1"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('POSTtournaments--tournament--players', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-POSTtournaments--tournament--players"
-                    onclick="tryItOut('POSTtournaments--tournament--players');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-POSTtournaments--tournament--players"
-                    onclick="cancelTryOut('POSTtournaments--tournament--players');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-POSTtournaments--tournament--players" hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-black">POST</small>
-            <b><code>tournaments/{tournament}/players</code></b>
-        </p>
-                <p>
-            <label id="auth-POSTtournaments--tournament--players" hidden>Authorization header:
-                <b><code>Bearer </code></b><input type="text"
-                                                                name="Authorization"
-                                                                data-prefix="Bearer "
-                                                                data-endpoint="POSTtournaments--tournament--players"
-                                                                data-component="header"></label>
-        </p>
-                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
-                    <p>
-                <b><code>tournament</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
-                <input type="number"
-               name="tournament"
-               data-endpoint="POSTtournaments--tournament--players"
-               value="1"
-               data-component="url" hidden>
-    <br>
-
-            </p>
-                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
-        <p>
-            <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
-                <input type="text"
-               name="name"
-               data-endpoint="POSTtournaments--tournament--players"
-               value="Adi"
-               data-component="body" hidden>
-    <br>
-<p>Name of the player. Must be less than or equal to 100 characters. Must not be greater than 100 characters.</p>
-        </p>
-        </form>
-
-            <h2 id="tournament-management-GETtournaments--tournament-">Get a tournament</h2>
+                <h2 id="tournament-management-GETtournaments--tournament-">Get a tournament</h2>
 
 <p>
 </p>
@@ -3037,14 +3760,14 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/tournaments/10" \
+    --get "http://localhost:8000/tournaments/9" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/10"
+    "http://localhost:8000/tournaments/9"
 );
 
 const headers = {
@@ -3061,7 +3784,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;get(
-    'http://localhost:8000/tournaments/10',
+    'http://localhost:8000/tournaments/9',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
@@ -3077,7 +3800,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/10'
+url = 'http://localhost:8000/tournaments/9'
 headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json'
@@ -3159,7 +3882,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="GETtournaments--tournament-"
-               value="10"
+               value="9"
                data-component="url" hidden>
     <br>
 
@@ -3203,7 +3926,208 @@ response.json()</code></pre></div>
 <br>
 <p>Last update timestamp.</p>
         </p>
-                <h2 id="tournament-management-PUTtournaments--tournament-">Replace a tournament</h2>
+                <h2 id="tournament-management-POSTtournaments">Create a tournament</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTtournaments">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8000/tournaments" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"name\": \"Tournament Awesome\",
+    \"description\": \"Lorem ipsum dolor sit...\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8000/tournaments"
+);
+
+const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "name": "Tournament Awesome",
+    "description": "Lorem ipsum dolor sit..."
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$response = $client-&gt;post(
+    'http://localhost:8000/tournaments',
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'json' =&gt; [
+            'name' =&gt; 'Tournament Awesome',
+            'description' =&gt; 'Lorem ipsum dolor sit...',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'http://localhost:8000/tournaments'
+payload = {
+    "name": "Tournament Awesome",
+    "description": "Lorem ipsum dolor sit..."
+}
+headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('POST', url, headers=headers, json=payload)
+response.json()</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTtournaments">
+            <blockquote>
+            <p>Example response (401, Unauthorized):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Unauthenticated&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (201, Created):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;id&quot;: 1,
+    &quot;name&quot;: &quot;Tournament 1&quot;,
+    &quot;description&quot;: &quot;The mind is willing, but the body is spongy and bruised&quot;,
+    &quot;started&quot;: false,
+    &quot;created_at&quot;: &quot;1970-01-01 00:00:00&quot;,
+    &quot;updated_at&quot;: &quot;1970-01-01 00:00:00&quot;,
+    &quot;_url&quot;: &quot;/tournaments/1&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Example response (422, Invalid Request Body):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Please give a name to the tournament (and 1 more error)&quot;,
+    &quot;errors&quot;: {
+        &quot;name&quot;: [
+            &quot;Please give a name to the tournament&quot;
+        ],
+        &quot;description&quot;: [
+            &quot;Description must be under 500 characters&quot;
+        ]
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTtournaments" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTtournaments"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTtournaments"></code></pre>
+</span>
+<span id="execution-error-POSTtournaments" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTtournaments"></code></pre>
+</span>
+<form id="form-POSTtournaments" data-method="POST"
+      data-path="tournaments"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTtournaments', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTtournaments"
+                    onclick="tryItOut('POSTtournaments');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTtournaments"
+                    onclick="cancelTryOut('POSTtournaments');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTtournaments" hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>tournaments</code></b>
+        </p>
+                <p>
+            <label id="auth-POSTtournaments" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="POSTtournaments"
+                                                                data-component="header"></label>
+        </p>
+                        <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <p>
+            <b><code>name</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+                <input type="text"
+               name="name"
+               data-endpoint="POSTtournaments"
+               value="Tournament Awesome"
+               data-component="body" hidden>
+    <br>
+<p>Name of the tournament. Must be less than or equal to 100 characters. Must not be greater than 100 characters.</p>
+        </p>
+                <p>
+            <b><code>description</code></b>&nbsp;&nbsp;<small>string</small>     <i>optional</i> &nbsp;
+                <input type="text"
+               name="description"
+               data-endpoint="POSTtournaments"
+               value="Lorem ipsum dolor sit..."
+               data-component="body" hidden>
+    <br>
+<p>Short description of the tournament. Must be less than or equal to 500 characters. Note: WYSIWYG tags and markdowns are considered too. Must not be greater than 500 characters.</p>
+        </p>
+        </form>
+
+            <h2 id="tournament-management-PUTtournaments--tournament-">Replace a tournament</h2>
 
 <p>
 </p>
@@ -3216,7 +4140,7 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/tournaments/16" \
+    "http://localhost:8000/tournaments/11" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -3228,7 +4152,7 @@ response.json()</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/16"
+    "http://localhost:8000/tournaments/11"
 );
 
 const headers = {
@@ -3251,7 +4175,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;put(
-    'http://localhost:8000/tournaments/16',
+    'http://localhost:8000/tournaments/11',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
@@ -3271,7 +4195,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/16'
+url = 'http://localhost:8000/tournaments/11'
 payload = {
     "name": "Tournament Awesome",
     "description": "Lorem ipsum dolor sit..."
@@ -3374,7 +4298,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="PUTtournaments--tournament-"
-               value="16"
+               value="11"
                data-component="url" hidden>
     <br>
 
@@ -3416,17 +4340,19 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8000/tournaments/12" \
+    "http://localhost:8000/tournaments/7" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/12"
+    "http://localhost:8000/tournaments/7"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -3440,9 +4366,10 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;delete(
-    'http://localhost:8000/tournaments/12',
+    'http://localhost:8000/tournaments/7',
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
@@ -3456,8 +4383,9 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/12'
+url = 'http://localhost:8000/tournaments/7'
 headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
@@ -3511,7 +4439,7 @@ response.json()</code></pre></div>
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('DELETEtournaments--tournament-', this);">
     <h3>
@@ -3549,7 +4477,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="DELETEtournaments--tournament-"
-               value="12"
+               value="7"
                data-component="url" hidden>
     <br>
 
@@ -3570,17 +4498,19 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/tournaments/1/start" \
+    "http://localhost:8000/tournaments/10/start" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/1/start"
+    "http://localhost:8000/tournaments/10/start"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -3594,9 +4524,10 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;put(
-    'http://localhost:8000/tournaments/1/start',
+    'http://localhost:8000/tournaments/10/start',
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
@@ -3610,8 +4541,9 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/1/start'
+url = 'http://localhost:8000/tournaments/10/start'
 headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
@@ -3674,7 +4606,7 @@ response.json()</code></pre></div>
       data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('PUTtournaments--tournament--start', this);">
     <h3>
@@ -3712,7 +4644,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="PUTtournaments--tournament--start"
-               value="1"
+               value="10"
                data-component="url" hidden>
     <br>
 

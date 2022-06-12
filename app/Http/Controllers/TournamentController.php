@@ -130,6 +130,7 @@ class TournamentController extends Controller
      * 
      * Tournament can only be replaces/edited by tournament owner.
      * 
+     * @authenticate
      * @responseFile 200 scenario="Success" responses/tournaments/get_tournament.json
      * @responseFile 404 scenario="Not Found" responses/errors/model.not_found.json
      * @responseFile 422 scenario="Invalid Request Body" responses/tournaments/post_tournament.error.json
@@ -161,7 +162,6 @@ class TournamentController extends Controller
      * @authenticated
      * @response 200 scenario="Success" {"message": "Tournament deleted"}
      * @responseFile 404 scenario="Not Found" responses/errors/model.not_found.json
-     * @authenticated
      * @response 401 scenario="Unauthorized" {"message": "Unauthenticated"}
      */
     public function destroy(int $id){

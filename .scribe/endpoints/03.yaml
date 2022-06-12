@@ -1,0 +1,167 @@
+name: Misc
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: me
+    metadata:
+      title: 'Get Current User'
+      description: 'Get current authenticated user.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"id": 1, "name": "username", "email": "name@example.com"}'
+        headers: []
+        description: '200, Success'
+      -
+        status: 401
+        content: '{"message": "Unauthenticated"}'
+        headers: []
+        description: '401, Unauthorized'
+    responseFields:
+      id:
+        name: id
+        description: 'Current authenticated user ID.'
+        type: integer
+      name:
+        name: name
+        description: 'Current authenticated user username.'
+        type: string
+      email:
+        name: email
+        description: 'Current authenticated user email.'
+        type: string
+  -
+    httpMethods:
+      - PUT
+    uri: me
+    metadata:
+      title: 'Edit Current User'
+      description: 'Edit current authenticated user.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      username:
+        name: username
+        description: 'Changed username.'
+        required: true
+        example: username
+        type: string
+        custom: []
+      email:
+        name: email
+        description: 'Changed email.'
+        required: true
+        example: email@example.com
+        type: string
+        custom: []
+    responses:
+      -
+        status: 200
+        content: '{"id": "JWT Token"}'
+        headers: []
+        description: '200, Success'
+      -
+        status: 401
+        content: '{"message": "Unauthenticated"}'
+        headers: []
+        description: '401, Unauthorized'
+      -
+        status: 422
+        content: |-
+          {
+            "message": "Please provide a new username (and 1 more error)",
+            "errors": {
+                "username": [
+                    "Please provide a new username"
+                ],
+                "email": [
+                    "Please provide an email"
+                ]
+            }
+          }
+        headers: []
+        description: '422, Unprocessable Entity'
+    responseFields:
+      token:
+        name: token
+        description: 'Return a new JWT token.'
+        type: string
+  -
+    httpMethods:
+      - PUT
+    uri: me/password
+    metadata:
+      title: 'Edit Current User'
+      description: 'Change current authenticated user''s password.'
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    queryParameters: []
+    bodyParameters:
+      oldPassword:
+        name: oldPassword
+        description: 'Old password. Necessary for security reasons.'
+        required: true
+        example: password
+        type: string
+        custom: []
+      password:
+        name: password
+        description: 'New password.'
+        required: true
+        example: newPassword
+        type: string
+        custom: []
+    responses:
+      -
+        status: 200
+        content: '{"message": "Password changed"}'
+        headers: []
+        description: '200, Success'
+      -
+        status: 401
+        content: '{"message": "Unauthenticated"}'
+        headers: []
+        description: '401, Unauthorized'
+      -
+        status: 422
+        content: |-
+          {
+            "message": "Please give the old password (and 1 more error)",
+            "errors": {
+                "oldPassword": [
+                    "Please give the old password"
+                ],
+                "password": [
+                    "Please provide a password"
+                ]
+            }
+          }
+        headers: []
+        description: '422, Unprocessable Entity'
+    responseFields:
+      message:
+        name: message
+        description: 'Status message.'
+        type: string
