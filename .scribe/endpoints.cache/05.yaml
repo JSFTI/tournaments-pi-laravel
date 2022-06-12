@@ -44,7 +44,7 @@ endpoints:
         name: user
         description: 'Get tournaments owned by specified user with id.'
         required: false
-        example: 20
+        example: 10
         type: integer
         custom: []
     bodyParameters: []
@@ -146,7 +146,7 @@ endpoints:
         name: tournament
         description: ''
         required: true
-        example: 10
+        example: 13
         type: integer
         custom: []
     queryParameters: []
@@ -277,9 +277,10 @@ endpoints:
     metadata:
       title: 'Replace a tournament'
       description: 'Tournament can only be replaces/edited by tournament owner.'
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -287,7 +288,7 @@ endpoints:
         name: tournament
         description: ''
         required: true
-        example: 19
+        example: 18
         type: integer
         custom: []
     queryParameters: []
@@ -364,7 +365,7 @@ endpoints:
         name: tournament
         description: ''
         required: true
-        example: 17
+        example: 18
         type: integer
         custom: []
     queryParameters: []
@@ -407,7 +408,7 @@ endpoints:
         name: tournament
         description: ''
         required: true
-        example: 6
+        example: 3
         type: integer
         custom: []
     queryParameters: []

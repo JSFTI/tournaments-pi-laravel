@@ -205,7 +205,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 <pre><code class="language-yaml">http://localhost:8000</code></pre>
 
         <h1 id="authenticating-requests">Authenticating requests</h1>
-<p>Authenticate requests to this API's endpoints by sending an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_AUTH_KEY}"</code></strong>.</p>
+<p>This API is authenticated by sending an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_AUTH_KEY}"</code></strong>.</p>
 <p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation below.</p>
 <p>Currently, the only way to procure the JWT Bearer is by providing user credentials in <a href="#authentication-endpoints-POSTlogin">login</a> endpoint.
 <br />
@@ -691,18 +691,18 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/tournaments/2/brackets?dataStructure=enim" \
+    --get "http://localhost:8000/tournaments/20/brackets?dataStructure=voluptates" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/2/brackets"
+    "http://localhost:8000/tournaments/20/brackets"
 );
 
 const params = {
-    "dataStructure": "enim",
+    "dataStructure": "voluptates",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -721,14 +721,14 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;get(
-    'http://localhost:8000/tournaments/2/brackets',
+    'http://localhost:8000/tournaments/20/brackets',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
         'query' =&gt; [
-            'dataStructure'=&gt; 'enim',
+            'dataStructure'=&gt; 'voluptates',
         ],
     ]
 );
@@ -740,9 +740,9 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/2/brackets'
+url = 'http://localhost:8000/tournaments/20/brackets'
 params = {
-  'dataStructure': 'enim',
+  'dataStructure': 'voluptates',
 }
 headers = {
   'Content-Type': 'application/json',
@@ -809,19 +809,153 @@ response.json()</code></pre></div>
 }</code>
  </pre>
             <blockquote>
-            <p>Example response (204):</p>
+            <p>Example response (200):</p>
         </blockquote>
                 <details class="annotation">
             <summary>
                 <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
 x-ratelimit-limit: 60
 x-ratelimit-remaining: 59
 vary: Origin
  </code></pre>
         </details>         <pre>
-<code>[Empty response]</code>
+
+<code class="language-json">{
+    &quot;brackets&quot;: {
+        &quot;id&quot;: 65,
+        &quot;match&quot;: 2,
+        &quot;player_id&quot;: 15,
+        &quot;tournament_id&quot;: 20,
+        &quot;created_at&quot;: &quot;2022-06-12T04:24:57.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2022-06-12T04:35:20.000000Z&quot;,
+        &quot;player&quot;: {
+            &quot;id&quot;: 15,
+            &quot;name&quot;: &quot;lala&quot;,
+            &quot;tournament_id&quot;: 20,
+            &quot;created_at&quot;: &quot;2022-06-12T04:24:41.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2022-06-12T04:24:41.000000Z&quot;,
+            &quot;_url&quot;: &quot;/players/15&quot;,
+            &quot;tournament_url&quot;: &quot;/tournaments/20&quot;
+        },
+        &quot;next_match_id&quot;: null,
+        &quot;prev_match&quot;: {
+            &quot;left&quot;: {
+                &quot;id&quot;: 66,
+                &quot;match&quot;: 1,
+                &quot;player_id&quot;: 15,
+                &quot;tournament_id&quot;: 20,
+                &quot;created_at&quot;: &quot;2022-06-12T04:24:57.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2022-06-12T04:26:38.000000Z&quot;,
+                &quot;player&quot;: {
+                    &quot;id&quot;: 15,
+                    &quot;name&quot;: &quot;lala&quot;,
+                    &quot;tournament_id&quot;: 20,
+                    &quot;created_at&quot;: &quot;2022-06-12T04:24:41.000000Z&quot;,
+                    &quot;updated_at&quot;: &quot;2022-06-12T04:24:41.000000Z&quot;,
+                    &quot;_url&quot;: &quot;/players/15&quot;,
+                    &quot;tournament_url&quot;: &quot;/tournaments/20&quot;
+                },
+                &quot;next_match_id&quot;: 65,
+                &quot;prev_match&quot;: {
+                    &quot;left&quot;: {
+                        &quot;id&quot;: 67,
+                        &quot;match&quot;: null,
+                        &quot;player_id&quot;: 15,
+                        &quot;tournament_id&quot;: 20,
+                        &quot;created_at&quot;: &quot;2022-06-12T04:24:57.000000Z&quot;,
+                        &quot;updated_at&quot;: &quot;2022-06-12T04:24:57.000000Z&quot;,
+                        &quot;player&quot;: {
+                            &quot;id&quot;: 15,
+                            &quot;name&quot;: &quot;lala&quot;,
+                            &quot;tournament_id&quot;: 20,
+                            &quot;created_at&quot;: &quot;2022-06-12T04:24:41.000000Z&quot;,
+                            &quot;updated_at&quot;: &quot;2022-06-12T04:24:41.000000Z&quot;,
+                            &quot;_url&quot;: &quot;/players/15&quot;,
+                            &quot;tournament_url&quot;: &quot;/tournaments/20&quot;
+                        },
+                        &quot;next_match_id&quot;: 66,
+                        &quot;prev_match&quot;: null
+                    },
+                    &quot;right&quot;: {
+                        &quot;id&quot;: 68,
+                        &quot;match&quot;: null,
+                        &quot;player_id&quot;: 13,
+                        &quot;tournament_id&quot;: 20,
+                        &quot;created_at&quot;: &quot;2022-06-12T04:24:57.000000Z&quot;,
+                        &quot;updated_at&quot;: &quot;2022-06-12T04:24:57.000000Z&quot;,
+                        &quot;player&quot;: {
+                            &quot;id&quot;: 13,
+                            &quot;name&quot;: &quot;haha&quot;,
+                            &quot;tournament_id&quot;: 20,
+                            &quot;created_at&quot;: &quot;2022-06-11T12:28:02.000000Z&quot;,
+                            &quot;updated_at&quot;: &quot;2022-06-11T12:28:02.000000Z&quot;,
+                            &quot;_url&quot;: &quot;/players/13&quot;,
+                            &quot;tournament_url&quot;: &quot;/tournaments/20&quot;
+                        },
+                        &quot;next_match_id&quot;: 66,
+                        &quot;prev_match&quot;: null
+                    }
+                }
+            },
+            &quot;right&quot;: {
+                &quot;id&quot;: 69,
+                &quot;match&quot;: null,
+                &quot;player_id&quot;: 14,
+                &quot;tournament_id&quot;: 20,
+                &quot;created_at&quot;: &quot;2022-06-12T04:24:57.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2022-06-12T04:24:57.000000Z&quot;,
+                &quot;player&quot;: {
+                    &quot;id&quot;: 14,
+                    &quot;name&quot;: &quot;lolo&quot;,
+                    &quot;tournament_id&quot;: 20,
+                    &quot;created_at&quot;: &quot;2022-06-12T04:24:35.000000Z&quot;,
+                    &quot;updated_at&quot;: &quot;2022-06-12T04:24:35.000000Z&quot;,
+                    &quot;_url&quot;: &quot;/players/14&quot;,
+                    &quot;tournament_url&quot;: &quot;/tournaments/20&quot;
+                },
+                &quot;next_match_id&quot;: 65,
+                &quot;prev_match&quot;: null
+            }
+        }
+    },
+    &quot;_url&quot;: &quot;/tournaments/20/brackets&quot;,
+    &quot;tournament_url&quot;: &quot;/tournaments/20&quot;,
+    &quot;added_players&quot;: [
+        {
+            &quot;id&quot;: 13,
+            &quot;name&quot;: &quot;haha&quot;,
+            &quot;tournament_id&quot;: 20,
+            &quot;created_at&quot;: &quot;2022-06-11T12:28:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2022-06-11T12:28:02.000000Z&quot;,
+            &quot;_url&quot;: &quot;/players/13&quot;,
+            &quot;tournament_url&quot;: &quot;/tournaments/20&quot;
+        },
+        {
+            &quot;id&quot;: 14,
+            &quot;name&quot;: &quot;lolo&quot;,
+            &quot;tournament_id&quot;: 20,
+            &quot;created_at&quot;: &quot;2022-06-12T04:24:35.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2022-06-12T04:24:35.000000Z&quot;,
+            &quot;_url&quot;: &quot;/players/14&quot;,
+            &quot;tournament_url&quot;: &quot;/tournaments/20&quot;
+        },
+        {
+            &quot;id&quot;: 15,
+            &quot;name&quot;: &quot;lala&quot;,
+            &quot;tournament_id&quot;: 20,
+            &quot;created_at&quot;: &quot;2022-06-12T04:24:41.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2022-06-12T04:24:41.000000Z&quot;,
+            &quot;_url&quot;: &quot;/players/15&quot;,
+            &quot;tournament_url&quot;: &quot;/tournaments/20&quot;
+        }
+    ],
+    &quot;remaining_players&quot;: [],
+    &quot;total_players&quot;: 3,
+    &quot;total_rounds&quot;: 2
+}</code>
  </pre>
     </span>
 <span id="execution-results-GETtournaments--tournament--brackets" hidden>
@@ -869,7 +1003,7 @@ vary: Origin
                 <input type="number"
                name="tournament"
                data-endpoint="GETtournaments--tournament--brackets"
-               value="2"
+               value="20"
                data-component="url" hidden>
     <br>
 
@@ -880,7 +1014,7 @@ vary: Origin
                 <input type="text"
                name="dataStructure"
                data-endpoint="GETtournaments--tournament--brackets"
-               value="enim"
+               value="voluptates"
                data-component="query" hidden>
     <br>
 <p>enum(tree,list) Defaults to &quot;list&quot;. Returns created brackets in tree or list.<br/>For <strong>trees</strong>, brackets will be structured recursively in a <strong><code>binary tree</code></strong>, under the <code>prev_match</code> attribute with the last match as root.<br/>For <strong>lists</strong>, brackets will be structured in an <strong><code>array</code></strong>.</p>
@@ -977,7 +1111,7 @@ Only tournament owner can create or replace brackets.</p>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/tournaments/11/brackets?dataStructure=eos&amp;empty=1" \
+    "http://localhost:8000/tournaments/15/brackets?dataStructure=veniam&amp;empty=1" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -985,11 +1119,11 @@ Only tournament owner can create or replace brackets.</p>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/11/brackets"
+    "http://localhost:8000/tournaments/15/brackets"
 );
 
 const params = {
-    "dataStructure": "eos",
+    "dataStructure": "veniam",
     "empty": "1",
 };
 Object.keys(params)
@@ -1010,7 +1144,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;put(
-    'http://localhost:8000/tournaments/11/brackets',
+    'http://localhost:8000/tournaments/15/brackets',
     [
         'headers' =&gt; [
             'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
@@ -1018,7 +1152,7 @@ $response = $client-&gt;put(
             'Accept' =&gt; 'application/json',
         ],
         'query' =&gt; [
-            'dataStructure'=&gt; 'eos',
+            'dataStructure'=&gt; 'veniam',
             'empty'=&gt; '1',
         ],
     ]
@@ -1031,9 +1165,9 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/11/brackets'
+url = 'http://localhost:8000/tournaments/15/brackets'
 params = {
-  'dataStructure': 'eos',
+  'dataStructure': 'veniam',
   'empty': '1',
 }
 headers = {
@@ -1201,7 +1335,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="PUTtournaments--tournament--brackets"
-               value="11"
+               value="15"
                data-component="url" hidden>
     <br>
 
@@ -1212,7 +1346,7 @@ response.json()</code></pre></div>
                 <input type="text"
                name="dataStructure"
                data-endpoint="PUTtournaments--tournament--brackets"
-               value="eos"
+               value="veniam"
                data-component="query" hidden>
     <br>
 <p>enum(tree,list) Defaults to &quot;list&quot;. Returns created brackets in tree or list.<br/>For <strong>trees</strong>, brackets will be structured recursively in a <strong><code>binary tree</code></strong>, under the <code>prev_match</code> attribute with the last match as root.<br/>For <strong>lists</strong>, brackets will be structured in an <strong><code>array</code></strong>.</p>
@@ -1337,19 +1471,19 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/brackets/10/player" \
+    "http://localhost:8000/brackets/1/player" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"player_id\": 17
+    \"player_id\": 2
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/brackets/10/player"
+    "http://localhost:8000/brackets/1/player"
 );
 
 const headers = {
@@ -1359,7 +1493,7 @@ const headers = {
 };
 
 let body = {
-    "player_id": 17
+    "player_id": 2
 };
 
 fetch(url, {
@@ -1372,7 +1506,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;put(
-    'http://localhost:8000/brackets/10/player',
+    'http://localhost:8000/brackets/1/player',
     [
         'headers' =&gt; [
             'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
@@ -1380,7 +1514,7 @@ $response = $client-&gt;put(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
-            'player_id' =&gt; 17,
+            'player_id' =&gt; 2,
         ],
     ]
 );
@@ -1392,9 +1526,9 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/brackets/10/player'
+url = 'http://localhost:8000/brackets/1/player'
 payload = {
-    "player_id": 17
+    "player_id": 2
 }
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
@@ -1489,7 +1623,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="bracket"
                data-endpoint="PUTbrackets--bracket--player"
-               value="10"
+               value="1"
                data-component="url" hidden>
     <br>
 
@@ -1500,7 +1634,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="player_id"
                data-endpoint="PUTbrackets--bracket--player"
-               value="17"
+               value="2"
                data-component="body" hidden>
     <br>
 <p>Target player.</p>
@@ -1524,14 +1658,14 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/tournaments/1/matches/9" \
+    --get "http://localhost:8000/tournaments/19/matches/6" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/1/matches/9"
+    "http://localhost:8000/tournaments/19/matches/6"
 );
 
 const headers = {
@@ -1548,7 +1682,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;get(
-    'http://localhost:8000/tournaments/1/matches/9',
+    'http://localhost:8000/tournaments/19/matches/6',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
@@ -1564,7 +1698,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/1/matches/9'
+url = 'http://localhost:8000/tournaments/19/matches/6'
 headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json'
@@ -1690,7 +1824,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="GETtournaments--tournament--matches--match_num-"
-               value="1"
+               value="19"
                data-component="url" hidden>
     <br>
 
@@ -1700,7 +1834,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="match_num"
                data-endpoint="GETtournaments--tournament--matches--match_num-"
-               value="9"
+               value="6"
                data-component="url" hidden>
     <br>
 
@@ -1768,19 +1902,19 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/tournaments/11/matches/15/winner" \
+    "http://localhost:8000/tournaments/10/matches/10/winner" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"player_id\": \"nihil\"
+    \"player_id\": \"eos\"
 }"
 </code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/11/matches/15/winner"
+    "http://localhost:8000/tournaments/10/matches/10/winner"
 );
 
 const headers = {
@@ -1790,7 +1924,7 @@ const headers = {
 };
 
 let body = {
-    "player_id": "nihil"
+    "player_id": "eos"
 };
 
 fetch(url, {
@@ -1803,7 +1937,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;put(
-    'http://localhost:8000/tournaments/11/matches/15/winner',
+    'http://localhost:8000/tournaments/10/matches/10/winner',
     [
         'headers' =&gt; [
             'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
@@ -1811,7 +1945,7 @@ $response = $client-&gt;put(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
-            'player_id' =&gt; 'nihil',
+            'player_id' =&gt; 'eos',
         ],
     ]
 );
@@ -1823,9 +1957,9 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/11/matches/15/winner'
+url = 'http://localhost:8000/tournaments/10/matches/10/winner'
 payload = {
-    "player_id": "nihil"
+    "player_id": "eos"
 }
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
@@ -1929,7 +2063,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="PUTtournaments--tournament--matches--match_num--winner"
-               value="11"
+               value="10"
                data-component="url" hidden>
     <br>
 
@@ -1939,7 +2073,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="match_num"
                data-endpoint="PUTtournaments--tournament--matches--match_num--winner"
-               value="15"
+               value="10"
                data-component="url" hidden>
     <br>
 <p>Match number of a tournament.</p>
@@ -1950,7 +2084,7 @@ response.json()</code></pre></div>
                 <input type="text"
                name="player_id"
                data-endpoint="PUTtournaments--tournament--matches--match_num--winner"
-               value="nihil"
+               value="eos"
                data-component="body" hidden>
     <br>
 <p>The winner of the match.</p>
@@ -2553,14 +2687,14 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/tournaments/19/players?page=1&amp;limit=10" \
+    --get "http://localhost:8000/tournaments/20/players?page=1&amp;limit=10" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/19/players"
+    "http://localhost:8000/tournaments/20/players"
 );
 
 const params = {
@@ -2584,7 +2718,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;get(
-    'http://localhost:8000/tournaments/19/players',
+    'http://localhost:8000/tournaments/20/players',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
@@ -2604,7 +2738,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/19/players'
+url = 'http://localhost:8000/tournaments/20/players'
 params = {
   'page': '1',
   'limit': '10',
@@ -2698,7 +2832,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="GETtournaments--tournament--players"
-               value="19"
+               value="20"
                data-component="url" hidden>
     <br>
 
@@ -2797,7 +2931,7 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request POST \
-    "http://localhost:8000/tournaments/12/players" \
+    "http://localhost:8000/tournaments/13/players" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -2809,7 +2943,7 @@ response.json()</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/12/players"
+    "http://localhost:8000/tournaments/13/players"
 );
 
 const headers = {
@@ -2832,7 +2966,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;post(
-    'http://localhost:8000/tournaments/12/players',
+    'http://localhost:8000/tournaments/13/players',
     [
         'headers' =&gt; [
             'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
@@ -2852,7 +2986,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/12/players'
+url = 'http://localhost:8000/tournaments/13/players'
 payload = {
     "name": "Adi"
 }
@@ -2971,7 +3105,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="POSTtournaments--tournament--players"
-               value="12"
+               value="13"
                data-component="url" hidden>
     <br>
 
@@ -3002,14 +3136,14 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/players/3" \
+    --get "http://localhost:8000/players/2" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/players/3"
+    "http://localhost:8000/players/2"
 );
 
 const headers = {
@@ -3026,7 +3160,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;get(
-    'http://localhost:8000/players/3',
+    'http://localhost:8000/players/2',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
@@ -3042,7 +3176,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/players/3'
+url = 'http://localhost:8000/players/2'
 headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json'
@@ -3123,7 +3257,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="player"
                data-endpoint="GETplayers--player-"
-               value="3"
+               value="2"
                data-component="url" hidden>
     <br>
 
@@ -3176,7 +3310,7 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/players/16" \
+    "http://localhost:8000/players/9" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
@@ -3188,7 +3322,7 @@ response.json()</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/players/16"
+    "http://localhost:8000/players/9"
 );
 
 const headers = {
@@ -3211,7 +3345,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;put(
-    'http://localhost:8000/players/16',
+    'http://localhost:8000/players/9',
     [
         'headers' =&gt; [
             'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
@@ -3231,7 +3365,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/players/16'
+url = 'http://localhost:8000/players/9'
 payload = {
     "name": "Adi"
 }
@@ -3341,7 +3475,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="player"
                data-endpoint="PUTplayers--player-"
-               value="16"
+               value="9"
                data-component="url" hidden>
     <br>
 
@@ -3373,7 +3507,7 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8000/players/16" \
+    "http://localhost:8000/players/13" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -3381,7 +3515,7 @@ response.json()</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/players/16"
+    "http://localhost:8000/players/13"
 );
 
 const headers = {
@@ -3399,7 +3533,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;delete(
-    'http://localhost:8000/players/16',
+    'http://localhost:8000/players/13',
     [
         'headers' =&gt; [
             'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
@@ -3416,7 +3550,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/players/16'
+url = 'http://localhost:8000/players/13'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -3501,7 +3635,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="player"
                data-endpoint="DELETEplayers--player-"
-               value="16"
+               value="13"
                data-component="url" hidden>
     <br>
 
@@ -3525,7 +3659,7 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/tournaments?page=1&amp;limit=10&amp;user=20" \
+    --get "http://localhost:8000/tournaments?page=1&amp;limit=10&amp;user=10" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -3538,7 +3672,7 @@ response.json()</code></pre></div>
 const params = {
     "page": "1",
     "limit": "10",
-    "user": "20",
+    "user": "10",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -3566,7 +3700,7 @@ $response = $client-&gt;get(
         'query' =&gt; [
             'page'=&gt; '1',
             'limit'=&gt; '10',
-            'user'=&gt; '20',
+            'user'=&gt; '10',
         ],
     ]
 );
@@ -3582,7 +3716,7 @@ url = 'http://localhost:8000/tournaments'
 params = {
   'page': '1',
   'limit': '10',
-  'user': '20',
+  'user': '10',
 }
 headers = {
   'Content-Type': 'application/json',
@@ -3704,7 +3838,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="user"
                data-endpoint="GETtournaments"
-               value="20"
+               value="10"
                data-component="query" hidden>
     <br>
 <p>Get tournaments owned by specified user with id.</p>
@@ -3786,14 +3920,14 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/tournaments/10" \
+    --get "http://localhost:8000/tournaments/13" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/10"
+    "http://localhost:8000/tournaments/13"
 );
 
 const headers = {
@@ -3810,7 +3944,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;get(
-    'http://localhost:8000/tournaments/10',
+    'http://localhost:8000/tournaments/13',
     [
         'headers' =&gt; [
             'Content-Type' =&gt; 'application/json',
@@ -3826,7 +3960,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/10'
+url = 'http://localhost:8000/tournaments/13'
 headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json'
@@ -3908,7 +4042,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="GETtournaments--tournament-"
-               value="10"
+               value="13"
                data-component="url" hidden>
     <br>
 
@@ -4156,6 +4290,7 @@ response.json()</code></pre></div>
             <h2 id="tournament-management-PUTtournaments--tournament-">Replace a tournament</h2>
 
 <p>
+<small class="badge badge-darkred">requires authentication</small>
 </p>
 
 <p>Tournament can only be replaces/edited by tournament owner.</p>
@@ -4166,7 +4301,8 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/tournaments/19" \
+    "http://localhost:8000/tournaments/18" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -4178,10 +4314,11 @@ response.json()</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/19"
+    "http://localhost:8000/tournaments/18"
 );
 
 const headers = {
+    "Authorization": "Bearer {YOUR_AUTH_KEY}",
     "Content-Type": "application/json",
     "Accept": "application/json",
 };
@@ -4201,9 +4338,10 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;put(
-    'http://localhost:8000/tournaments/19',
+    'http://localhost:8000/tournaments/18',
     [
         'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
             'Content-Type' =&gt; 'application/json',
             'Accept' =&gt; 'application/json',
         ],
@@ -4221,12 +4359,13 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/19'
+url = 'http://localhost:8000/tournaments/18'
 payload = {
     "name": "Tournament Awesome",
     "description": "Lorem ipsum dolor sit..."
 }
 headers = {
+  'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
@@ -4291,10 +4430,10 @@ response.json()</code></pre></div>
 </span>
 <form id="form-PUTtournaments--tournament-" data-method="PUT"
       data-path="tournaments/{tournament}"
-      data-authed="0"
+      data-authed="1"
       data-hasfiles="0"
       data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
+      data-headers='{"Authorization":"Bearer {YOUR_AUTH_KEY}","Content-Type":"application\/json","Accept":"application\/json"}'
       autocomplete="off"
       onsubmit="event.preventDefault(); executeTryOut('PUTtournaments--tournament-', this);">
     <h3>
@@ -4318,13 +4457,21 @@ response.json()</code></pre></div>
             <small class="badge badge-darkblue">PUT</small>
             <b><code>tournaments/{tournament}</code></b>
         </p>
-                    <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                <p>
+            <label id="auth-PUTtournaments--tournament-" hidden>Authorization header:
+                <b><code>Bearer </code></b><input type="text"
+                                                                name="Authorization"
+                                                                data-prefix="Bearer "
+                                                                data-endpoint="PUTtournaments--tournament-"
+                                                                data-component="header"></label>
+        </p>
+                <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
                     <p>
                 <b><code>tournament</code></b>&nbsp;&nbsp;<small>integer</small>  &nbsp;
                 <input type="number"
                name="tournament"
                data-endpoint="PUTtournaments--tournament-"
-               value="19"
+               value="18"
                data-component="url" hidden>
     <br>
 
@@ -4366,7 +4513,7 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8000/tournaments/17" \
+    "http://localhost:8000/tournaments/18" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -4374,7 +4521,7 @@ response.json()</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/17"
+    "http://localhost:8000/tournaments/18"
 );
 
 const headers = {
@@ -4392,7 +4539,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;delete(
-    'http://localhost:8000/tournaments/17',
+    'http://localhost:8000/tournaments/18',
     [
         'headers' =&gt; [
             'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
@@ -4409,7 +4556,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/17'
+url = 'http://localhost:8000/tournaments/18'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -4503,7 +4650,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="DELETEtournaments--tournament-"
-               value="17"
+               value="18"
                data-component="url" hidden>
     <br>
 
@@ -4524,7 +4671,7 @@ response.json()</code></pre></div>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8000/tournaments/6/start" \
+    "http://localhost:8000/tournaments/3/start" \
     --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
@@ -4532,7 +4679,7 @@ response.json()</code></pre></div>
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/tournaments/6/start"
+    "http://localhost:8000/tournaments/3/start"
 );
 
 const headers = {
@@ -4550,7 +4697,7 @@ fetch(url, {
 <div class="php-example">
     <pre><code class="language-php">$client = new \GuzzleHttp\Client();
 $response = $client-&gt;put(
-    'http://localhost:8000/tournaments/6/start',
+    'http://localhost:8000/tournaments/3/start',
     [
         'headers' =&gt; [
             'Authorization' =&gt; 'Bearer {YOUR_AUTH_KEY}',
@@ -4567,7 +4714,7 @@ print_r(json_decode((string) $body));</code></pre></div>
     <pre><code class="language-python">import requests
 import json
 
-url = 'http://localhost:8000/tournaments/6/start'
+url = 'http://localhost:8000/tournaments/3/start'
 headers = {
   'Authorization': 'Bearer {YOUR_AUTH_KEY}',
   'Content-Type': 'application/json',
@@ -4670,7 +4817,7 @@ response.json()</code></pre></div>
                 <input type="number"
                name="tournament"
                data-endpoint="PUTtournaments--tournament--start"
-               value="6"
+               value="3"
                data-component="url" hidden>
     <br>
 

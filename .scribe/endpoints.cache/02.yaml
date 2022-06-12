@@ -22,14 +22,14 @@ endpoints:
         name: tournament
         description: ''
         required: true
-        example: 1
+        example: 19
         type: integer
         custom: []
       match_num:
         name: match_num
         description: ''
         required: true
-        example: 9
+        example: 6
         type: integer
         custom: []
     queryParameters: []
@@ -156,14 +156,14 @@ endpoints:
         name: tournament
         description: ''
         required: true
-        example: 11
+        example: 10
         type: integer
         custom: []
       match_num:
         name: match_num
         description: 'Match number of a tournament.'
         required: false
-        example: 15
+        example: 10
         type: integer
         custom: []
     queryParameters: []
@@ -172,7 +172,7 @@ endpoints:
         name: player_id
         description: 'The winner of the match.'
         required: true
-        example: nihil
+        example: eos
         type: string
         custom: []
     responses:

@@ -22,7 +22,7 @@ endpoints:
         name: tournament
         description: ''
         required: true
-        example: 19
+        example: 20
         type: integer
         custom: []
     queryParameters:
@@ -134,7 +134,7 @@ endpoints:
         name: tournament
         description: ''
         required: true
-        example: 12
+        example: 13
         type: integer
         custom: []
     queryParameters: []
@@ -207,7 +207,7 @@ endpoints:
         name: player
         description: ''
         required: true
-        example: 3
+        example: 2
         type: integer
         custom: []
     queryParameters: []
@@ -277,7 +277,7 @@ endpoints:
         name: player
         description: ''
         required: true
-        example: 16
+        example: 9
         type: integer
         custom: []
     queryParameters: []
@@ -346,7 +346,7 @@ endpoints:
         name: player
         description: ''
         required: true
-        example: 16
+        example: 13
         type: integer
         custom: []
     queryParameters: []
