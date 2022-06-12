@@ -41,5 +41,5 @@ Notable technologies used in this project to ease development:
 2. run ```composer install```
 3. Copy .env.example and rename to .env
 4. Configure the .env file. Main area of interest is database configuration.
-5. run ```php artisan generate:key```
+5. run ```php artisan key:generate```
 6. run ```php artisan jwt:secret```
