@@ -20,7 +20,7 @@ endpoints:
         name: tournament
         description: ''
         required: true
-        example: 16
+        example: 2
         type: integer
         custom: []
     queryParameters:
@@ -28,7 +28,7 @@ endpoints:
         name: dataStructure
         description: 'enum(tree,list) Defaults to "list". Returns created brackets in tree or list.<br/>For **trees**, brackets will be structured recursively in a **```binary tree```**, under the ```prev_match``` attribute with the last match as root.<br/>For **lists**, brackets will be structured in an **```array```**.'
         required: false
-        example: et
+        example: enim
         type: string
         custom: []
     bodyParameters: []
@@ -83,11 +83,10 @@ endpoints:
         headers: []
         description: '404, Not Found'
       -
-        status: 404
-        content: '{"message":"Tournament not found"}'
+        status: 204
+        content: ''
         headers:
           cache-control: 'no-cache, private'
-          content-type: application/json
           x-ratelimit-limit: '60'
           x-ratelimit-remaining: '59'
           vary: Origin
@@ -174,7 +173,7 @@ endpoints:
         name: tournament
         description: ''
         required: true
-        example: 2
+        example: 11
         type: integer
         custom: []
     queryParameters:
@@ -182,14 +181,14 @@ endpoints:
         name: dataStructure
         description: 'enum(tree,list) Defaults to "list". Returns created brackets in tree or list.<br/>For **trees**, brackets will be structured recursively in a **```binary tree```**, under the ```prev_match``` attribute with the last match as root.<br/>For **lists**, brackets will be structured in an **```array```**.'
         required: false
-        example: tempore
+        example: eos
         type: string
         custom: []
       empty:
         name: empty
         description: 'Defaults to "true". If ```empty``` is specified, players will not be added automatically. Refer to **Upsert Player in Bracket**.'
         required: false
-        example: false
+        example: true
         type: boolean
         custom: []
     bodyParameters: []
@@ -370,7 +369,7 @@ endpoints:
         name: bracket
         description: ''
         required: true
-        example: 6
+        example: 10
         type: integer
         custom: []
     queryParameters: []
@@ -379,7 +378,7 @@ endpoints:
         name: player_id
         description: 'Target player.'
         required: false
-        example: 10
+        example: 17
         type: integer
         custom: []
     responses:

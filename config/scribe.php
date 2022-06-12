@@ -248,7 +248,11 @@ return [
          * Any extra authentication-related info for your users. For instance, you can describe how to find or generate their auth credentials.
          * Markdown and HTML are supported.
          */
-        'extra_info' => 'Currently, the only way to procure the JWT Bearer is by providing user credentials in <a href="#authentication-endpoints-POSTlogin">login</a> endpoint.',
+        'extra_info' => <<<INTRO
+            Currently, the only way to procure the JWT Bearer is by providing user credentials in <a href="#authentication-endpoints-POSTlogin">login</a> endpoint.
+            <br />
+            To test in Postman, it is recommended to put the procured token in collection settings.
+            INTRO,
     ],
 
     /*

@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Tournaments API",
-        "_postman_id": "d202a167-3efd-4511-ab74-e6250f27edac",
+        "_postman_id": "747f75e9-66e7-48f7-b354-1d53ca48fc73",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -91,7 +91,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"username\":\"username\",\"email\":\"email@example.com\",\"password\":\"password\"}"
+                            "raw": "{\"username\":\"username\",\"email\":\"email@example.com\",\"password\":\"password\",\"password_confirmation\":\"password\"}"
                         },
                         "description": "Registers a new user. Returns JWT, user ID, and username.",
                         "auth": {
@@ -134,17 +134,17 @@
                             "query": [
                                 {
                                     "key": "dataStructure",
-                                    "value": "et",
+                                    "value": "enim",
                                     "description": "enum(tree,list) Defaults to \"list\". Returns created brackets in tree or list.For **trees**, brackets will be structured recursively in a **```binary tree```**, under the ```prev_match``` attribute with the last match as root.For **lists**, brackets will be structured in an **```array```**.",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/tournaments\/:tournament\/brackets?dataStructure=et",
+                            "raw": "{{baseUrl}}\/tournaments\/:tournament\/brackets?dataStructure=enim",
                             "variable": [
                                 {
                                     "id": "tournament",
                                     "key": "tournament",
-                                    "value": "16",
+                                    "value": "2",
                                     "description": ""
                                 }
                             ]
@@ -192,10 +192,6 @@
                                     "value": "no-cache, private"
                                 },
                                 {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
                                     "key": "x-ratelimit-limit",
                                     "value": "60"
                                 },
@@ -208,8 +204,8 @@
                                     "value": "Origin"
                                 }
                             ],
-                            "code": 404,
-                            "body": "{\"message\":\"Tournament not found\"}",
+                            "code": 204,
+                            "body": "",
                             "name": ""
                         }
                     ]
@@ -223,23 +219,23 @@
                             "query": [
                                 {
                                     "key": "dataStructure",
-                                    "value": "tempore",
+                                    "value": "eos",
                                     "description": "enum(tree,list) Defaults to \"list\". Returns created brackets in tree or list.For **trees**, brackets will be structured recursively in a **```binary tree```**, under the ```prev_match``` attribute with the last match as root.For **lists**, brackets will be structured in an **```array```**.",
                                     "disabled": false
                                 },
                                 {
                                     "key": "empty",
-                                    "value": "",
+                                    "value": "1",
                                     "description": "Defaults to \"true\". If ```empty``` is specified, players will not be added automatically. Refer to **Upsert Player in Bracket**.",
-                                    "disabled": true
+                                    "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/tournaments\/:tournament\/brackets?dataStructure=tempore&empty=",
+                            "raw": "{{baseUrl}}\/tournaments\/:tournament\/brackets?dataStructure=eos&empty=1",
                             "variable": [
                                 {
                                     "id": "tournament",
                                     "key": "tournament",
-                                    "value": "2",
+                                    "value": "11",
                                     "description": ""
                                 }
                             ]
@@ -303,7 +299,7 @@
                                 {
                                     "id": "bracket",
                                     "key": "bracket",
-                                    "value": "6",
+                                    "value": "10",
                                     "description": ""
                                 }
                             ]
@@ -321,7 +317,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"player_id\":10}"
+                            "raw": "{\"player_id\":17}"
                         },
                         "description": "Insert a player to a bracket or replace a player in a bracket. Upsert can only be done if tournament has not started yet.\n\n<aside class=\"info\">If upserted player is already in the tournament brackets and the bracket is already assigned to a player, then both players' position in the bracket will be swapped.<\/aside>"
                     },
@@ -364,13 +360,13 @@
                                 {
                                     "id": "tournament",
                                     "key": "tournament",
-                                    "value": "15",
+                                    "value": "1",
                                     "description": ""
                                 },
                                 {
                                     "id": "match_num",
                                     "key": "match_num",
-                                    "value": "20",
+                                    "value": "9",
                                     "description": ""
                                 }
                             ]
@@ -419,13 +415,13 @@
                                 {
                                     "id": "tournament",
                                     "key": "tournament",
-                                    "value": "13",
+                                    "value": "11",
                                     "description": ""
                                 },
                                 {
                                     "id": "match_num",
                                     "key": "match_num",
-                                    "value": "4",
+                                    "value": "15",
                                     "description": "Match number of a tournament."
                                 }
                             ]
@@ -443,7 +439,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"player_id\":\"odit\"}"
+                            "raw": "{\"player_id\":\"nihil\"}"
                         },
                         "description": "Assigns a winner to a match. Winner can only be declared if tournament is started and player comes from previous match\/bracket."
                     },
@@ -566,7 +562,7 @@
                     ]
                 },
                 {
-                    "name": "Edit Current User",
+                    "name": "Edit Current Password",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -587,7 +583,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"oldPassword\":\"password\",\"password\":\"newPassword\"}"
+                            "raw": "{\"oldPassword\":\"password\",\"password\":\"newPassword\",\"password_confirmation\":\"newPassword\"}"
                         },
                         "description": "Change current authenticated user's password."
                     },
@@ -649,7 +645,7 @@
                                 {
                                     "id": "tournament",
                                     "key": "tournament",
-                                    "value": "4",
+                                    "value": "19",
                                     "description": ""
                                 }
                             ]
@@ -698,7 +694,7 @@
                                 {
                                     "id": "tournament",
                                     "key": "tournament",
-                                    "value": "7",
+                                    "value": "12",
                                     "description": ""
                                 }
                             ]
@@ -759,7 +755,7 @@
                                 {
                                     "id": "player",
                                     "key": "player",
-                                    "value": "8",
+                                    "value": "3",
                                     "description": ""
                                 }
                             ]
@@ -808,7 +804,7 @@
                                 {
                                     "id": "player",
                                     "key": "player",
-                                    "value": "19",
+                                    "value": "16",
                                     "description": ""
                                 }
                             ]
@@ -863,7 +859,7 @@
                                 {
                                     "id": "player",
                                     "key": "player",
-                                    "value": "17",
+                                    "value": "16",
                                     "description": ""
                                 }
                             ]
@@ -930,12 +926,12 @@
                                 },
                                 {
                                     "key": "user",
-                                    "value": "11",
+                                    "value": "20",
                                     "description": "Get tournaments owned by specified user with id.",
                                     "disabled": false
                                 }
                             ],
-                            "raw": "{{baseUrl}}\/tournaments?page=1&name=&limit=10&user=11"
+                            "raw": "{{baseUrl}}\/tournaments?page=1&name=&limit=10&user=20"
                         },
                         "method": "GET",
                         "header": [
@@ -981,7 +977,7 @@
                                 {
                                     "id": "tournament",
                                     "key": "tournament",
-                                    "value": "9",
+                                    "value": "10",
                                     "description": ""
                                 }
                             ]
@@ -1077,7 +1073,7 @@
                                 {
                                     "id": "tournament",
                                     "key": "tournament",
-                                    "value": "11",
+                                    "value": "19",
                                     "description": ""
                                 }
                             ]
@@ -1135,7 +1131,7 @@
                                 {
                                     "id": "tournament",
                                     "key": "tournament",
-                                    "value": "7",
+                                    "value": "17",
                                     "description": ""
                                 }
                             ]
@@ -1187,7 +1183,7 @@
                                 {
                                     "id": "tournament",
                                     "key": "tournament",
-                                    "value": "10",
+                                    "value": "6",
                                     "description": ""
                                 }
                             ]

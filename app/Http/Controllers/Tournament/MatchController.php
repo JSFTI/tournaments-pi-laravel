@@ -105,6 +105,6 @@ class MatchController extends Controller
         $match->player_id = $request->player_id;
         $match->save();
 
-        return response()->json(['message' => 'Winner declared'], 200);
+        return response()->json(['message' => 'Winner successfully declared'], 200);
     }
 }

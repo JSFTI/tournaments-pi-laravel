@@ -108,7 +108,7 @@ endpoints:
       - PUT
     uri: me/password
     metadata:
-      title: 'Edit Current User'
+      title: 'Edit Current Password'
       description: 'Change current authenticated user''s password.'
       authenticated: true
       custom: []
@@ -130,6 +130,13 @@ endpoints:
         name: password
         description: 'New password.'
         required: true
+        example: newPassword
+        type: string
+        custom: []
+      password_confirmation:
+        name: password_confirmation
+        description: 'Confirm new password.'
+        required: false
         example: newPassword
         type: string
         custom: []

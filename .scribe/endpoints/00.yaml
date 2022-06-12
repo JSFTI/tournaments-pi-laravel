@@ -114,6 +114,13 @@ endpoints:
         example: password
         type: string
         custom: []
+      password_confirmation:
+        name: password_confirmation
+        description: 'Same value as ```password```.'
+        required: false
+        example: password
+        type: string
+        custom: []
     responses:
       -
         status: 200

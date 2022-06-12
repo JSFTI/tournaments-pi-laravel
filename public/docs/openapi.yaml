@@ -223,6 +223,10 @@ paths:
                   type: string
                   description: 'Your password.'
                   example: password
+                password_confirmation:
+                  type: string
+                  description: 'Same value as ```password```.'
+                  example: password
               required:
                 - username
                 - email
@@ -237,12 +241,12 @@ paths:
           in: query
           name: dataStructure
           description: 'enum(tree,list) Defaults to "list". Returns created brackets in tree or list.<br/>For **trees**, brackets will be structured recursively in a **```binary tree```**, under the ```prev_match``` attribute with the last match as root.<br/>For **lists**, brackets will be structured in an **```array```**.'
-          example: et
+          example: enim
           required: false
           schema:
             type: string
             description: 'enum(tree,list) Defaults to "list". Returns created brackets in tree or list.<br/>For **trees**, brackets will be structured recursively in a **```binary tree```**, under the ```prev_match``` attribute with the last match as root.<br/>For **lists**, brackets will be structured in an **```array```**.'
-            example: et
+            example: enim
         -
           in: header
           name: Content-Type
@@ -320,17 +324,19 @@ paths:
                     type: string
                     example: /tournaments/2
         404:
-          description: ''
+          description: 'Not Found'
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: 'Tournament not found'
+                  message: 'Reason of error'
                 properties:
                   message:
                     type: string
-                    example: 'Tournament not found'
+                    example: 'Reason of error'
+        204:
+          description: ''
       tags:
         - 'Manage Brackets'
       security: []
@@ -342,22 +348,22 @@ paths:
           in: query
           name: dataStructure
           description: 'enum(tree,list) Defaults to "list". Returns created brackets in tree or list.<br/>For **trees**, brackets will be structured recursively in a **```binary tree```**, under the ```prev_match``` attribute with the last match as root.<br/>For **lists**, brackets will be structured in an **```array```**.'
-          example: tempore
+          example: eos
           required: false
           schema:
             type: string
             description: 'enum(tree,list) Defaults to "list". Returns created brackets in tree or list.<br/>For **trees**, brackets will be structured recursively in a **```binary tree```**, under the ```prev_match``` attribute with the last match as root.<br/>For **lists**, brackets will be structured in an **```array```**.'
-            example: tempore
+            example: eos
         -
           in: query
           name: empty
           description: 'Defaults to "true". If ```empty``` is specified, players will not be added automatically. Refer to **Upsert Player in Bracket**.'
-          example: false
+          example: true
           required: false
           schema:
             type: boolean
             description: 'Defaults to "true". If ```empty``` is specified, players will not be added automatically. Refer to **Upsert Player in Bracket**.'
-            example: false
+            example: true
         -
           in: header
           name: Authorization
@@ -474,7 +480,7 @@ paths:
         in: path
         name: tournament
         description: ''
-        example: 16
+        example: 2
         required: true
         schema:
           type: integer
@@ -553,13 +559,13 @@ paths:
                 player_id:
                   type: integer
                   description: 'Target player.'
-                  example: 10
+                  example: 17
     parameters:
       -
         in: path
         name: bracket
         description: ''
-        example: 6
+        example: 10
         required: true
         schema:
           type: integer
@@ -723,7 +729,7 @@ paths:
         in: path
         name: tournament
         description: ''
-        example: 15
+        example: 1
         required: true
         schema:
           type: integer
@@ -731,7 +737,7 @@ paths:
         in: path
         name: match_num
         description: ''
-        example: 20
+        example: 9
         required: true
         schema:
           type: integer
@@ -822,7 +828,7 @@ paths:
                 player_id:
                   type: string
                   description: 'The winner of the match.'
-                  example: odit
+                  example: nihil
               required:
                 - player_id
     parameters:
@@ -830,7 +836,7 @@ paths:
         in: path
         name: tournament
         description: ''
-        example: 13
+        example: 11
         required: true
         schema:
           type: integer
@@ -847,7 +853,7 @@ paths:
             value: ''
           present:
             summary: 'When the value is present'
-            value: 4
+            value: 15
   /me:
     get:
       summary: 'Get Current User'
@@ -1008,7 +1014,7 @@ paths:
                 - email
   /me/password:
     put:
-      summary: 'Edit Current User'
+      summary: 'Edit Current Password'
       description: 'Change current authenticated user''s password.'
       parameters:
         -
@@ -1100,6 +1106,10 @@ paths:
                 password:
                   type: string
                   description: 'New password.'
+                  example: newPassword
+                password_confirmation:
+                  type: string
+                  description: 'Confirm new password.'
                   example: newPassword
               required:
                 - oldPassword
@@ -1348,7 +1358,7 @@ paths:
         in: path
         name: tournament
         description: ''
-        example: 4
+        example: 19
         required: true
         schema:
           type: integer
@@ -1591,7 +1601,7 @@ paths:
         in: path
         name: player
         description: ''
-        example: 8
+        example: 3
         required: true
         schema:
           type: integer
@@ -1634,12 +1644,12 @@ paths:
           in: query
           name: user
           description: 'Get tournaments owned by specified user with id.'
-          example: 11
+          example: 20
           required: false
           schema:
             type: integer
             description: 'Get tournaments owned by specified user with id.'
-            example: 11
+            example: 20
         -
           in: header
           name: Content-Type
@@ -2100,7 +2110,7 @@ paths:
         in: path
         name: tournament
         description: ''
-        example: 9
+        example: 10
         required: true
         schema:
           type: integer
@@ -2186,7 +2196,7 @@ paths:
         in: path
         name: tournament
         description: ''
-        example: 10
+        example: 6
         required: true
         schema:
           type: integer

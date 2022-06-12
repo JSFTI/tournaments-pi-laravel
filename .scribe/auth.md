@@ -5,3 +5,5 @@ Authenticate requests to this API's endpoints by sending an **`Authorization`** 
 All authenticated endpoints are marked with a `requires authentication` badge in the documentation below.
 
 Currently, the only way to procure the JWT Bearer is by providing user credentials in <a href="#authentication-endpoints-POSTlogin">login</a> endpoint.
+<br />
+To test in Postman, it is recommended to put the procured token in collection settings.

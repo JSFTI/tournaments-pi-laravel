@@ -63,7 +63,7 @@ class MeController extends Controller
     }
 
     /**
-     * Edit Current User
+     * Edit Current Password
      * 
      * Change current authenticated user's password.
      * 
